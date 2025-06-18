@@ -1,8 +1,13 @@
 <template>
-  <main>
-    Hello homepage here !
-  </main>
+  <HeroSection />
 </template>
 
-<script setup>
+<script>
+import HeroSection from './components/HeroSection.vue';
+
+export default {
+  components: {
+    HeroSection
+  }
+}
 </script>
