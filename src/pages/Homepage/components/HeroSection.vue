@@ -5,17 +5,14 @@
             <h1>PRENEZ SOIN DE VOTRE<br>COMPAGNON EN 1 CLIC</h1>
 
             <!-- Sous-titre  -->
-            <p class="subtitle">La plateforme qui connecte les propriétaires d'animaux aux meilleurs professionnels<br>vétérinaires |</p>
+            <p class="subtitle">La plateforme qui connecte les propriétaires d'animaux aux meilleurs
+                professionnels<br>vétérinaires |</p>
 
             <!-- Barre d'actions avec les 3 éléments -->
             <div class="action-bar">
                 <!-- Champ email -->
                 <div class="action-item email-container">
-                    <input 
-                        type="email" 
-                        placeholder="Enter your email" 
-                        class="email-input"
-                    >
+                    <input type="email" placeholder="Enter your email" class="email-input">
                 </div>
 
                 <!-- Adresse -->
@@ -33,16 +30,19 @@
 
             <div class="features">
                 <div class="feature-card">
-                    <img src="../assets/icônes/urgence-icon.svg" alt="Urgence" class="feature-icon">
-                    <h3>URGENCE</h3>
-                    <p>En cas d'urgence pour votre animal, chaque minute compte. Nos partenaires<br>vétérinaires qualifiés sont là pour sauver la santé de vos compagnons.</p>
+                    <h3>🚨 URGENCE</h3>
+                    <p>En cas d'urgence pour votre animal, chaque minute compte. Nos partenaires<br>vétérinaires
+                        qualifiés sont là pour sauver la santé de vos compagnons.</p>
                     <button class="button">Contacter maintenant</button>
                 </div>
 
                 <div class="feature-card">
-                    <img src="../assets/icônes/chat-icon.svg" alt="Conseil IA" class="feature-icon">
-                    <h3>CONSEIL IA</h3>
-                    <p>Vous avez un doute concernant votre animal et vous ne savez pas quoi faire ?<br>Notre conseiller virtuel est là pour vous 7j/7 et 24h/24.</p>
+                    <div class="flex gap-2 items-center">
+                        <img :src="botIcon" alt="Conseil IA" class="feature-icon w-6">
+                        <h3>CONSEIL IA</h3>
+                    </div>
+                    <p>Vous avez un doute concernant votre animal et vous ne savez pas quoi faire ?<br>Notre conseiller
+                        virtuel est là pour vous 7j/7 et 24h/24.</p>
                     <button class="button">Démarrer le chat</button>
                 </div>
             </div>
@@ -51,12 +51,14 @@
     </section>
 </template>
 
-<script>
+<script setup>
+import botIcon from '@/assets/icons/chat-icon.svg';
+
 </script>
 
 <style scoped>
 .hero {
-    background: 
+    background:
         linear-gradient(180deg, #43A047 0%, rgba(255, 255, 255, 0.8) 100%),
         url('../assets/images/hero-bg.svg') no-repeat center center;
     background-size: cover;
@@ -86,7 +88,7 @@
     font-weight: 700;
     line-height: 1.2;
     margin-bottom: 1rem;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .subtitle {
@@ -98,7 +100,7 @@
     line-height: 1.5;
     max-width: 800px;
     margin-bottom: 2rem;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .appointment-button {
@@ -125,6 +127,7 @@
 .feature-card {
     display: flex;
     flex-direction: column;
+    gap: 24px;
     background: #FFF;
     border-radius: 20px;
     padding: 1rem;
@@ -139,7 +142,7 @@
     font-size: 1rem;
     font-weight: 500;
     text-transform: uppercase;
-    margin-bottom: 1rem;
+    /* margin-bottom: 1rem; */
 }
 
 .feature-card p {
@@ -172,15 +175,15 @@
     .features {
         flex-direction: column;
     }
-    
+
     .feature-card {
         width: 100%;
     }
-    
+
     .hero h1 {
         font-size: 2rem;
     }
-    
+
     .subtitle {
         font-size: 1.1rem;
     }
