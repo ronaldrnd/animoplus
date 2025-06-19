@@ -1,7 +1,10 @@
 <template>
   <section
     class="w-full min-h-screen flex items-center justify-center p-8 bg-cover bg-center bg-no-repeat"
-    :style="`background-image: linear-gradient(180deg, #43A047 0%, rgba(255, 255, 255, 0.8) 100%), url(${heroBg})`"
+    :style="`background-image: url(${heroBg})`"
+
+
+
   >
     <div class="w-full max-w-screen-xl mx-auto flex flex-col items-center gap-8">
       <!-- Titre principal -->
