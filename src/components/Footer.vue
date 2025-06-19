@@ -1,5 +1,5 @@
 <template>
-    <div class="inline-flex flex-col justify-start items-start gap-6 w-full p-8">
+    <div class="inline-flex flex-col justify-start items-start gap-6 w-full p-8 bg-white">
         <div class="w-full h-0.5 bg-green-600"></div>
         <div class="self-stretch inline-flex justify-between items-center">
             <div class="p-3 bg-green-600 inline-flex flex-col justify-start items-start gap-2.5">

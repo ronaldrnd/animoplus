@@ -10,7 +10,7 @@ import Footer from './components/Footer.vue';
 
 <template>
   <!-- Non connecté -->
-  <Navbar v-if="!auth.isAuthenticated" />
+  <Navbar class="appbar" v-if="!auth.isAuthenticated" />
   <RouterView v-if="!auth.isAuthenticated" />
   <Footer v-if="!auth.isAuthenticated" />
 
@@ -18,7 +18,7 @@ import Footer from './components/Footer.vue';
   <div v-else-if="auth.role === 'client'" class="layout">
     <Sidebar role="client" />
     <div class="main flex flex-col h-screen w-full overflow-hidden px-[24px]">
-      <div class="appbar">
+      <div class="appbar bg-white">
         <AppNavbar role="client" />
       </div>
       <div class="content flex-1 overflow-y-auto">
@@ -31,7 +31,7 @@ import Footer from './components/Footer.vue';
   <div v-else-if="auth.role === 'pro'" class="layout">
     <Sidebar role="pro" />
     <div class="main flex flex-col h-screen w-full overflow-hidden px-[24px]">
-      <div class="appbar">
+      <div class="appbar bg-white">
         <AppNavbar role="pro" />
       </div>
       <div class="content flex-1 overflow-y-auto">
@@ -51,7 +51,6 @@ import Footer from './components/Footer.vue';
   position: sticky;
   top: 0;
   z-index: 10;
-  background-color: white;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  /* box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05); */
 }
 </style>

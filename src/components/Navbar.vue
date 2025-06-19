@@ -1,8 +1,6 @@
 <template>
-    <div :class="[
-        isLoginPage ? 'bg-transparent' : 'bg-primary-600',
-        'w-full flex justify-between items-center py-[24px] px-[44px]'
-    ]">
+    <div class="
+        w-full flex justify-between items-center py-[24px] px-[44px]">
         <router-link to="/">
             <img class="w-28 h-9" src="../assets/logo_header.png" />
         </router-link>

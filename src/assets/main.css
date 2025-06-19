@@ -2,6 +2,18 @@
 
 :root {
   font-family: "League Spartan", "Montserrat", "Inter", sans-serif;
+  --color-primary-600: #43a047;
+  --color-primary-500: #6cc447;
+  --color-primary-300: #a5d6a7;
+
+  --color-accent-500: #a0522d;
+  --color-accent-400: #ffdb58;
+
+  --color-neutral-900: #111827;
+  --color-neutral-700: #374151;
+  --color-neutral-600: #4b5563;
+  --color-neutral-300: #b0bec5;
+  --color-neutral-200: #e5e7eb;
 }
 
 @theme {
