@@ -56,9 +56,9 @@ function loginAs(role) {
   auth.isAuthenticated = true
   auth.role = role
   if (role === 'client') {
-    router.push('/')
+    router.push('/dashboard')
   } else if (role === 'pro') {
-    router.push('/')
+    router.push('/dashboard')
   }
 }
 </script>

@@ -1,3 +1,0 @@
-<template>
-    header login
-</template>

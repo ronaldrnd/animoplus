@@ -38,9 +38,13 @@
 
 <script setup>
 import { auth } from '@/stores/auth'
+import { useRouter } from 'vue-router'
+
 import logoutIcon from '@/assets/icons/logout.svg';
 import userIcon from '@/assets/icons/user-profil.svg';
 import botIcon from '@/assets/icons/bot.svg';
+
+const router = useRouter()
 
 defineProps({
   role: {
@@ -52,5 +56,6 @@ defineProps({
 function logout() {
   auth.isAuthenticated = false
   auth.role = null
+  router.push('/login')
 }
 </script>
