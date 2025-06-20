@@ -7,8 +7,12 @@
             <!-- Menu principal -->
             <nav class="flex flex-col gap-8">
                 <RouterLink v-for="item in menuItems" :key="item.label" :to="item.link"
-                    class="flex items-center gap-4 text-white font-['League_Spartan'] font-medium text-base hover:underline transition">
-                    <img :src="item.icon" alt="user profil" class="feature-icon w-6">
+                    class="flex items-center gap-4 font-medium text-base hover:underline transition"
+                    :class="route.path === item.link ? 'text-accent-400' : 'text-white'"
+                    >
+                    <img :src="item.icon" alt="menu icon" class="feature-icon w-6"
+                        :class="{ 'filter-accent': route.path === item.link }"
+                         />
                     <span>{{ item.label }}</span>
                 </RouterLink>
             </nav>
@@ -26,6 +30,8 @@
 </template>
 
 <script setup>
+import { useRoute } from 'vue-router';
+
 import dashboardIcon from '@/assets/icons/dashboard.svg';
 import animalIcon from '@/assets/icons/animal.svg';
 import appointmentIcon from '@/assets/icons/appointment.svg';
@@ -37,6 +43,7 @@ import sheetIcon from '@/assets/icons/sheet-icon.svg';
 import taskIcon from '@/assets/icons/task.svg';
 import userIconWhite from '@/assets/icons/user-profil-white.svg';
 
+const route = useRoute();
 
 const props = defineProps({
     user: {
@@ -46,76 +53,76 @@ const props = defineProps({
 });
 
 const menuItems = [
-    { 
-        label: "Tableau de bord", 
+    {
+        label: "Tableau de bord",
         icon: dashboardIcon,
         user: "",
-        link: "/"
+        link: "/dashboard"
     },
-    { 
-        label: "Agenda", 
+    {
+        label: "Agenda",
         icon: appointmentIcon,
         user: "pro",
         link: "/"
     },
-    { 
-        label: "Mes animaux", 
+    {
+        label: "Mes animaux",
         icon: animalIcon,
         user: "client",
         link: "/"
     },
-    { 
-        label: "Prise de rendez-vous", 
+    {
+        label: "Prise de rendez-vous",
         icon: appointmentIcon,
         user: "client",
         link: "/"
     },
-    { 
-        label: "Messagerie", 
+    {
+        label: "Messagerie",
         icon: chatIcon,
         user: "",
         link: "/"
     },
-    { 
-        label: "Gestion des services", 
+    {
+        label: "Gestion des services",
         icon: animalIcon,
-        user: "pro", 
+        user: "pro",
         link: "/"
     },
-    { 
-        label: "Tâches", 
+    {
+        label: "Tâches",
         icon: taskIcon,
         user: "pro",
         link: "/"
     },
-    { 
-        label: "Comptabilité", 
+    {
+        label: "Comptabilité",
         icon: sheetIcon,
-        user: "pro", 
+        user: "pro",
         link: "/"
     },
-    { 
-        label: "Mes documents", 
+    {
+        label: "Mes documents",
         icon: documentIcon,
-        user: "client", 
+        user: "client",
         link: "/"
     },
-    { 
-        label: "Documents professionnels", 
+    {
+        label: "Documents professionnels",
         icon: documentIcon,
-        user: "pro", 
+        user: "pro",
         link: "/"
     },
-    { 
-        label: "Recherche par spécialité", 
+    {
+        label: "Recherche par spécialité",
         icon: searchSpecial,
-        user: "client", 
+        user: "client",
         link: "/"
     },
-    { 
-        label: "Gestion de stock", 
+    {
+        label: "Gestion de stock",
         icon: stockIcon,
-        user: "pro", 
+        user: "pro",
         link: "/"
     },
 ];
