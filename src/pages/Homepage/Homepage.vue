@@ -6,14 +6,21 @@
   
     <ActionCards />
     <ProfessionalsSection />
+    <OptiCare />
+    <CompanionPartner />
+    <QuestionsBanner />
+
 
   </div>
 </template>
 
 <script setup>
 import HeroSection from './components/HeroSection.vue';
-import ProfessionalsSection from './components/ProfessionalsSection.vue';
 import ActionCards from './components/ActionCards.vue';
+import ProfessionalsSection from './components/ProfessionalsSection.vue';
+import OptiCare from './components/OptiCare.vue';
+import CompanionPartner from './components/CompanionPartner.vue';
+import QuestionsBanner from './components/QuestionsBanner.vue';
 
 </script>
 <style scoped>
