@@ -1,6 +1,6 @@
 <template>
   <section
-    class="grid gap-8"
+    class="grid gap-8 w-full"
     style="grid-template-columns: repeat(auto-fit, minmax(400px, 1fr))"
   >
     <div class="action-card flex flex-col gap-8">
