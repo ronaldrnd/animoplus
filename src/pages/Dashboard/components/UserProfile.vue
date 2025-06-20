@@ -14,12 +14,12 @@
             </div>
             <div class="self-stretch inline-flex justify-between items-start">
                 <div class="flex justify-center items-start gap-2">
-                    <img :src="date" alt="icon" />
+                    <img :src="phone" alt="icon" />
                     <div class="justify-start text-black text-xs font-normal font-['League_Spartan']">+261 03 400 05
                     </div>
                 </div>
                 <div class="flex justify-center items-start gap-2">
-                    <img :src="date" alt="icon" />
+                    <img :src="marker" alt="icon" />
                     <div class="justify-start text-black text-xs font-normal font-['League_Spartan']">Antananarivo 101
                     </div>
                 </div>
@@ -39,6 +39,9 @@
 
 <script setup>
 import CardLayout from "./CardLayout.vue";
+
 import date from '@/assets/icons/small-calendar.svg';
+import marker from '@/assets/icons/small-marker.svg';
+import phone from '@/assets/icons/small-phone.svg';
 import animalIcon from '@/assets/icons/animalGreen.svg';
 </script>
