@@ -6,6 +6,7 @@
   
     <ActionCards />
     <ProfessionalsSection />
+    <SpecialityList />
     <OptiCare />
     <CompanionPartner />
     <QuestionsBanner />
@@ -18,6 +19,7 @@
 import HeroSection from './components/HeroSection.vue';
 import ActionCards from './components/ActionCards.vue';
 import ProfessionalsSection from './components/ProfessionalsSection.vue';
+import SpecialityList from './components/SpecialityList.vue';
 import OptiCare from './components/OptiCare.vue';
 import CompanionPartner from './components/CompanionPartner.vue';
 import QuestionsBanner from './components/QuestionsBanner.vue';
