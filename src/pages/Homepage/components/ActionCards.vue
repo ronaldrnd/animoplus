@@ -1,9 +1,9 @@
 <template>
   <section
-    class="grid gap-8 max-w-[1600px] px-8"
+    class="grid gap-8"
     style="grid-template-columns: repeat(auto-fit, minmax(400px, 1fr))"
   >
-    <div class="action-card flex flex-col gap-4">
+    <div class="action-card flex flex-col gap-8">
       <div class="flex gap-2 items-center">
         <img :src="urgenceIcon" alt="Urgence" class="w-5" />
         <h3 class="uppercase text-black font-spartan font-bold text-xl">
@@ -16,12 +16,12 @@
         compagnons.
       </p>
       <button
-        class="bg-green-700 text-white px-4 py-2 rounded-md text-sm font-spartan hover:bg-green-700"
+        class="bg-primary-600 text-white px-4 py-3 rounded-md text-sm font-spartan hover:bg-primary-600"
       >
         Contacter maintenant
       </button>
     </div>
-    <div class="action-card flex flex-col gap-4">
+    <div class="action-card flex flex-col gap-8">
       <div class="flex gap-2 items-center">
         <img :src="botIcon" alt="Conseil IA" class="w-6" />
         <h3 class="uppercase text-black font-spartan font-bold text-xl">
@@ -33,7 +33,7 @@
         faire ? Notre conseiller virtuel est là pour vous 7j/7 et 24h/24.
       </p>
       <button
-        class="bg-green-700 text-white px-4 py-2 rounded-md text-sm font-spartan hover:bg-green-700"
+        class="bg-primary-600 text-white px-4 py-3 rounded-md text-sm font-spartan hover:bg-primary-600"
       >
         Démarrer le chat
       </button>
@@ -50,7 +50,7 @@ import botIcon from "@/assets/icons/chat-icon.svg";
 .action-card {
   background: #fff;
   border-radius: 24px;
-  padding: 40px;
+  padding: 44px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
   position: relative;

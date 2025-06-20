@@ -1,8 +1,8 @@
 <template>
     <div class="inline-flex flex-col justify-start items-start gap-6 w-full p-8 bg-white">
-        <div class="w-full h-0.5 bg-green-600"></div>
+        <div class="w-full h-0.5 bg-primay-600"></div>
         <div class="self-stretch inline-flex justify-between items-center">
-            <div class="p-3 bg-green-600 inline-flex flex-col justify-start items-start gap-2.5">
+            <div class="p-3 bg-primay-600 inline-flex flex-col justify-start items-start gap-2.5">
                 <img class="w-36 h-11" src="../assets/logo_header.png" />
             </div>
             <div class="w-96 h-6 relative overflow-hidden">
@@ -16,7 +16,7 @@
                     class="w-28 left-[50.31px] top-[3px] absolute justify-start text-slate-900 text-base font-normal font-['League_Spartan']">
                     (123) 456-7890</div>
                 <div class="w-8 h-6 left-0 top-0 absolute"></div>
-                <div class="w-6 h-4 left-[3.81px] top-[3.01px] absolute bg-green-600"></div>
+                <div class="w-6 h-4 left-[3.81px] top-[3.01px] absolute bg-primay-600"></div>
             </div>
             <div class="w-40 h-6 relative overflow-hidden">
                 <div

@@ -1,48 +1,25 @@
 <template>
-  <section class="w-[95%] mb-6 flex flex-col items-center">
-    <div class="w-full flex flex-col items-center gap-3">
-      <h1 class="text-green-600 text-center font-spartan text-2xl font-extrabold uppercase">
-        LE PARTENAIRE DE VOTRE COMPAGNON
-      </h1>
-      <img
-        :src="layerYellow"
-        alt="Soulignement jaune"
-        class="w-[150px] -mt-1 mb-5 relative left-48"
-      />
+  <section class="w-full my-[80px] flex flex-col items-center">
+    <div class="w-full flex flex-col items-center gap-[80px]">
+      <div class="relative">
+        <h1 class="text-primary-600 text-center font-spartan text-[40px] font-extrabold uppercase">
+          LE PARTENAIRE DE VOTRE COMPAGNON
+        </h1>
+        <img :src="layerYellow" alt="layer yellow" class="absolute right-0" />
+      </div>
 
-      <div
-        class="w-full flex flex-col gap-8 mt-2 md:flex-row md:justify-around md:items-start"
-      >
-        <!-- Bloc 1 -->
-        <div class="max-w-[300px] flex flex-col items-center text-center gap-3 mt-8">
-          <img :src="careIcon" alt="Soins" class="w-10 h-10" />
-          <h3 class="font-spartan text-sm font-bold text-gray-900 uppercase">
-            FACILITE L'ACCÈS AUX SOINS
+      <div class="w-full flex flex-col gap-2 mt-2 md:gap-12 md:flex-row md:justify-between md:items-start">
+        <div
+          v-for="(item, index) in features"
+          :key="index"
+          class="flex flex-col items-center text-center gap-4 mt-8"
+        >
+          <img :src="item.icon" :alt="item.alt" />
+          <h3 class="font-spartan text-[20px] font-bold text-gray-900 uppercase">
+            {{ item.title }}
           </h3>
-          <p class="font-spartan text-sm text-gray-600">
-            Trouvez rapidement un professionnel animalier près de chez vous et prenez rendez-vous en quelques clics.
-          </p>
-        </div>
-
-        <!-- Bloc 2 -->
-        <div class="max-w-[300px] flex flex-col items-center text-center gap-3 mt-8">
-          <img :src="followupIcon" alt="Suivi" class="w-10 h-10" />
-          <h3 class="font-spartan text-sm font-bold text-gray-900 uppercase">
-            UN SUIVI SUR-MESURE
-          </h3>
-          <p class="font-spartan text-sm text-gray-600">
-            Bénéficiez d’un suivi personnalisé de votre animal avec un accès à son dossier médical complet.
-          </p>
-        </div>
-
-        <!-- Bloc 3 -->
-        <div class="max-w-[300px] flex flex-col items-center text-center gap-3 mt-8">
-          <img :src="certifiedIcon" alt="Certifiés" class="w-10 h-10" />
-          <h3 class="font-spartan text-sm font-bold text-gray-900 uppercase">
-            DES PROFESSIONNELS CERTIFIÉS
-          </h3>
-          <p class="font-spartan text-sm text-gray-600">
-            Tous nos partenaires sont des professionnels vérifiés et certifiés afin de garantir un service fiable et sécurisé.
+          <p class="font-spartan text-base text-gray-600">
+            {{ item.description }}
           </p>
         </div>
       </div>
@@ -55,4 +32,28 @@ import careIcon from '@/assets/icons/care.svg'
 import followupIcon from '@/assets/icons/followup.svg'
 import certifiedIcon from '@/assets/icons/certified.svg'
 import layerYellow from '@/assets/layers/layer-yellow.svg'
+
+const features = [
+  {
+    icon: careIcon,
+    alt: 'Soins',
+    title: "FACILITE L'ACCÈS AUX SOINS",
+    description:
+      'Trouvez rapidement un professionnel animalier près de chez vous et prenez rendez-vous en quelques clics.'
+  },
+  {
+    icon: followupIcon,
+    alt: 'Suivi',
+    title: 'UN SUIVI SUR-MESURE',
+    description:
+      'Bénéficiez d’un suivi personnalisé de votre animal avec un accès à son dossier médical complet.'
+  },
+  {
+    icon: certifiedIcon,
+    alt: 'Certifiés',
+    title: 'DES PROFESSIONNELS CERTIFIÉS',
+    description:
+      'Tous nos partenaires sont des professionnels vérifiés et certifiés afin de garantir un service fiable et sécurisé.'
+  }
+]
 </script>

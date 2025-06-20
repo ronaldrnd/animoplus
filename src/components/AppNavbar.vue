@@ -14,20 +14,20 @@
     <div class="flex items-center gap-8 flex-wrap">
 
       <!-- Avatar -->
-      <div class="p-2 rounded-full outline outline-1 outline-green-600 flex items-center justify-center cursor-pointer">
+      <div class="p-2 rounded-full outline outline-1 outline-primary-600 flex items-center justify-center cursor-pointer">
         <img :src="botIcon" alt="bot icon" class="feature-icon w-6">
       </div>
 
       <!-- Lien profil -->
       <div class="flex items-center gap-2 cursor-pointer">
         <img :src="userIcon" alt="user profil" class="feature-icon w-6">
-        <span class="text-green-600 text-base font-normal font-['League_Spartan']">Mon profil</span>
+        <span class="text-primary-600 text-base font-normal font-['League_Spartan']">Mon profil</span>
       </div>
 
       <!-- Bouton déconnexion -->
       <button
         @click="logout"
-        class="cursor-pointer px-4 py-2 bg-white rounded-xl shadow outline outline-1 outline-gray-200 flex items-center gap-2 hover:bg-gray-50 transition"
+        class="px-4 py-2 bg-white rounded-xl shadow outline outline-1 outline-gray-200 flex items-center gap-2 hover:bg-gray-50 transition"
       >
         <span class="text-red-500 text-base font-['League_Spartan']">Déconnexion</span>
         <img :src="logoutIcon" alt="log out" class="feature-icon w-6">
