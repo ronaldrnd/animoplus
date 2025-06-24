@@ -1,7 +1,7 @@
 <template>
   <!-- Section principale avec la marge spécifique conservée -->
-  <section class="speciality-list" :style="{ 'margin-top': '-25px' }">
-    <div class="container mx-auto bg-white border border-gray-200 rounded-[10px] shadow-sm p-[30px] w-[95%]">
+  <section class="speciality-list">
+    <div class="mx-auto">
       <h2 class="text-[18px] font-bold text-[#2E2E30] mb-[20px]">Liste des spécialités</h2>
       <hr class="separator w-full h-[2px] bg-[rgba(197,197,197,0.5)] border-none mb-[20px]">
 
@@ -100,10 +100,8 @@ const specialities = [
 </script>
 
 <style scoped>
-/* Seule la marge spécifique conservée en CSS classique */
 .speciality-list {
   padding: 0;
   width: 100%;
-  font-family: 'Arial', sans-serif;
 }
 </style>
