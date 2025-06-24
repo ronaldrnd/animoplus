@@ -1,7 +1,6 @@
 <template>
   <section
-    class="w-full mx-auto mt-[80px] px-5 py-[84px] flex flex-col items-center gap-6 rounded-[30px] border border-gray-200 bg-white/70 backdrop-blur-md shadow-md"
-  >
+    class="w-full mx-auto mt-[80px] px-5 py-[84px] flex flex-col items-center gap-6 rounded-[30px] border border-gray-200 bg-white/70 backdrop-blur-md shadow-md">
     <div class="w-full flex flex-col items-center gap-6">
       <h1 class="text-gray-600 text-center text-[40px] font-extrabold uppercase m-0">
         ANNUAIRE DES PROFESSIONNELS

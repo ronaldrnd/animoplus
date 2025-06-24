@@ -2,7 +2,7 @@
     <div class="
         w-full flex justify-between items-center py-[24px] px-[44px]">
         <router-link to="/">
-            <img class="w-28 h-9" src="../assets/logo_header.png" />
+            <img class="w-28 h-9" src="../assets/animoplus_header.png" />
         </router-link>
 
         <div v-if="!isLoginPage" class="flex justify-start items-center gap-10">

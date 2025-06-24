@@ -3,7 +3,7 @@
         <div class="w-full h-0.5 bg-primary-600"></div>
         <div class="self-stretch inline-flex justify-between items-center">
             <div class="p-3 bg-primary-600 inline-flex flex-col justify-start items-start gap-2.5">
-                <img class="w-36 h-11" src="../assets/logo_header.png" />
+                <img class="w-36 h-11" src="../assets/animoplus_header.png" />
             </div>
             <div class="flex flex-col gap-4 items-start">
                 <div class="flex justify-center items-start gap-2">
@@ -36,7 +36,7 @@
                     Policy</div>
             </div>
             <div class="opacity-50 justify-start text-slate-900 text-lg font-normal font-['League_Spartan']">Copyright ©
-                2025 • Doctopet.</div>
+                2025 • Animo+.</div>
         </div>
     </div>
 </template>
