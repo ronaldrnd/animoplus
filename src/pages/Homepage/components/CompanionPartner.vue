@@ -2,7 +2,7 @@
   <section class="w-full my-[80px] flex flex-col items-center">
     <div class="w-full flex flex-col items-center gap-[80px]">
       <div class="relative">
-        <h1 class="text-primary-600 text-center font-spartan text-[40px] font-extrabold uppercase">
+        <h1 class="text-primary-600 text-center text-[40px] font-extrabold uppercase">
           LE PARTENAIRE DE VOTRE COMPAGNON
         </h1>
         <img :src="layerYellow" alt="layer yellow" class="absolute right-0" />
@@ -15,10 +15,10 @@
           class="flex flex-col items-center text-center gap-4 mt-8"
         >
           <img :src="item.icon" :alt="item.alt" />
-          <h3 class="font-spartan text-[20px] font-bold text-gray-900 uppercase">
+          <h3 class="text-[20px] font-bold text-gray-900 uppercase">
             {{ item.title }}
           </h3>
-          <p class="font-spartan text-base text-gray-600">
+          <p class="text-base text-gray-600">
             {{ item.description }}
           </p>
         </div>

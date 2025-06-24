@@ -4,7 +4,7 @@
       <div class="flex gap-[44px] flex-col items-center">
         <div class="relative">
           <!-- Titre principal -->
-          <h1 class=" h-54 text-white text-center font-spartan font-bold text-[64px] leading-28 drop-shadow-md">
+          <h1 class=" h-54 text-white text-center font-bold text-[64px] leading-28 drop-shadow-md">
             PRENEZ SOIN DE VOTRE<br /> 
             {{ typedText }} <span
             class="border-r-2 border-white animate-pulse"></span>
@@ -16,7 +16,7 @@
         </div>
 
         <!-- Sous-titre  -->
-        <p class="text-white text-center font-spartan text-[1.2rem] font-normal leading-relaxed min-h-[2rem]">
+        <p class="text-white text-center text-[1.2rem] font-normal leading-relaxed min-h-[2rem]">
           La plateforme qui connecte les propriétaires d'animaux aux meilleurs professionnels vétérinaires
         </p>
 

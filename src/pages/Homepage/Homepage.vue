@@ -12,8 +12,7 @@
 
     <BubbleGreen class="bubble bubble-1" />
     <BubbleYellow class="bubble bubble-2" />
-    <div class="bubble bubble-3"></div>
-    <BubbleBrown class="bubble bubble-4" />
+    <BubbleBrown class="bubble bubble-3" />
     <BubbleGray class="bubble bubble-5" />
     <BubbleGreenTwo class="bubble bubble-6" />
 
@@ -52,9 +51,9 @@ import BubbleGray from '@/assets/bubbles/1_gray.vue';
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  height: 160vh;
   background-image:
-    linear-gradient(170deg, #43A047 100%, #FFF 100%);
+    linear-gradient(180deg, #43A047 0%, #FFF 100%);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top center;
@@ -103,19 +102,9 @@ import BubbleGray from '@/assets/bubbles/1_gray.vue';
 }
 
 .bubble-3 {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  background: rgba(76, 175, 80, 0.5);
-  bottom: 20%;
-  right: 10%;
-  animation-delay: 4s;
-}
-
-.bubble-4 {
   opacity: 0.5;
-  bottom: 0;
-  left: 150px;
+  bottom: -200px;
+  left: 10px;
   animation-delay: 1s;
 }
 

@@ -2,7 +2,7 @@
     <div class="w-90 h-full p-6 bg-primary-600 flex flex-col justify-between">
         <!-- Logo + Menu -->
         <div class="flex flex-col gap-24">
-            <img class="w-28 h-9" src="../assets/logo_header.png" />
+            <img class="w-28 h-9" src="../assets/animoplus_header.png" />
 
             <!-- Menu principal -->
             <nav class="flex flex-col gap-8">

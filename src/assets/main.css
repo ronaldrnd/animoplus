@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  font-family: "League Spartan", "Montserrat", "Inter", sans-serif;
+  font-family: Inter, "Montserrat", "Inter", sans-serif;
   --color-primary-600: #43a047;
   --color-primary-500: #6cc447;
   --color-primary-300: #a5d6a7;
@@ -76,7 +76,7 @@
 }
 
 * {
-  font-family: "League Spartan", sans-serif;
+  font-family: Inter, sans-serif;
 }
 
 ::-webkit-scrollbar {
