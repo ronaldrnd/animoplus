@@ -1,6 +1,6 @@
 <template>
   <section
-    class="w-[95%] max-w-[1900px] mx-auto mt-[75px] px-5 py-[84px] flex flex-col items-center gap-6 rounded-[30px] border border-gray-200 bg-white/70 backdrop-blur-md shadow-md"
+    class="w-[95%] max-w-[1900px] mx-auto mt-[75px] px-5 py-[84px] flex flex-col items-center gap-6 rounded-[30px] border border-gray-200 bg-white/70 backdrop-blur-md shadow-md mb-[-30px]"
   >
     <div class="w-full flex flex-col items-center gap-6">
       <h1 class="text-gray-600 text-center font-spartan text-[25px] font-extrabold uppercase m-0">

@@ -5,6 +5,7 @@
     <HeroSection />
   
     <ActionCards />
+    <ChatPopup />
     <ProfessionalsSection />
     <SpecialityList />
     <OptiCare />
@@ -18,6 +19,7 @@
 <script setup>
 import HeroSection from './components/HeroSection.vue';
 import ActionCards from './components/ActionCards.vue';
+import ChatPopup from './components/ChatPopup.vue';
 import ProfessionalsSection from './components/ProfessionalsSection.vue';
 import SpecialityList from './components/SpecialityList.vue';
 import OptiCare from './components/OptiCare.vue';
@@ -39,4 +41,5 @@ import QuestionsBanner from './components/QuestionsBanner.vue';
   background-position: top center;
   z-index: -1;
 }
+
 </style>
