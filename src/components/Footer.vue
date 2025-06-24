@@ -1,28 +1,28 @@
 <template>
-    <div class="inline-flex flex-col justify-start items-start gap-6 w-full p-8 bg-white">
-        <div class="w-full h-0.5 bg-green-600"></div>
+    <div class="flex flex-col justify-start items-start gap-6 w-full p-8 bg-white">
+        <div class="w-full h-0.5 bg-primary-600"></div>
         <div class="self-stretch inline-flex justify-between items-center">
-            <div class="p-3 bg-green-600 inline-flex flex-col justify-start items-start gap-2.5">
+            <div class="p-3 bg-primary-600 inline-flex flex-col justify-start items-start gap-2.5">
                 <img class="w-36 h-11" src="../assets/logo_header.png" />
             </div>
-            <div class="w-96 h-6 relative overflow-hidden">
-                <div
-                    class="w-96 left-[50.31px] top-[3px] absolute justify-start text-slate-900 text-base font-normal font-['League_Spartan']">
-                    345 Faulconer Drive, Suite 4 • Charlottesville, CA, 12345</div>
-                <div class="w-8 h-6 left-0 top-0 absolute"></div>
-            </div>
-            <div class="w-40 h-6 relative overflow-hidden">
-                <div
-                    class="w-28 left-[50.31px] top-[3px] absolute justify-start text-slate-900 text-base font-normal font-['League_Spartan']">
-                    (123) 456-7890</div>
-                <div class="w-8 h-6 left-0 top-0 absolute"></div>
-                <div class="w-6 h-4 left-[3.81px] top-[3.01px] absolute bg-green-600"></div>
-            </div>
-            <div class="w-40 h-6 relative overflow-hidden">
-                <div
-                    class="w-28 left-[50.31px] top-[3px] absolute justify-start text-slate-900 text-base font-normal font-['League_Spartan']">
-                    (123) 456-7890</div>
-                <div class="w-8 h-6 left-0 top-0 absolute"></div>
+            <div class="flex flex-col gap-4 items-start">
+                <div class="flex justify-center items-start gap-2">
+                    <img :src="marker" alt="icon" />
+                    <div class="justify-start text-black text-base font-normal font-['League_Spartan']">345 Faulconer
+                        Drive,
+                        Suite 4 • Charlottesville, CA, 12345
+                    </div>
+                </div>
+                <div class="flex justify-center items-start gap-2">
+                    <img :src="phone" alt="icon" />
+                    <div class="justify-start text-black text-base font-normal font-['League_Spartan']">(123) 456-7890
+                    </div>
+                </div>
+                <div class="flex justify-center items-start gap-2">
+                    <img :src="date" alt="icon" />
+                    <div class="justify-start text-black text-base font-normal font-['League_Spartan']">(123) 456-7890
+                    </div>
+                </div>
             </div>
         </div>
         <div class="w-full h-px opacity-20 bg-lime-500"></div>
@@ -42,7 +42,9 @@
 </template>
 
 <script setup>
-
+import date from '@/assets/icons/small-calendar.svg';
+import marker from '@/assets/icons/small-marker.svg';
+import phone from '@/assets/icons/small-phone.svg';
 </script>
 
 <style></style>

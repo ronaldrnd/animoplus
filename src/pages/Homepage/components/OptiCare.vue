@@ -1,52 +1,51 @@
 <template>
-  <section class="bg-green-600 text-white rounded-[30px] w-[95%] max-w-[1500px] mx-auto mt-[75px] px-5 py-10 flex items-center min-h-[480px]">
-    <div class="w-full flex flex-col gap-6">
+  <section
+    class="bg-primary-600 w-full flex gap-4 justify-between text-white rounded-[30px] mx-auto mt-[80px] p-[64px] items-center"
+  >
+    <div class="flex flex-col gap-2">
       <div class="text-left">
-        <h1 class="font-spartan text-[27px] font-semibold uppercase leading-[1.2]">
+        <h1 class="text-[40px] font-semibold uppercase">
           VOUS ÊTES <br />PROFESSIONNELS ?
         </h1>
       </div>
 
-      <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-8">
-        <!-- Texte à gauche -->
-        <div class="flex-1 max-w-[700px] flex flex-col justify-center items-start">
-          <ul class="list-none p-0 m-0 space-y-2">
-            <li class="relative pl-9 font-spartan text-[15px] leading-[1.4] flex items-center">
-              <span class="absolute left-0 w-[30px] h-[30px] bg-no-repeat bg-center bg-contain" style="background-image: url('@/assets/layers/pointer.svg')"></span>
-              Dispenser les meilleurs soins possibles à vos patients
-            </li>
-            <li class="relative pl-9 font-spartan text-[15px] leading-[1.4] flex items-center">
-              <span class="absolute left-0 w-[30px] h-[30px] bg-no-repeat bg-center bg-contain" style="background-image: url('@/assets/layers/pointer.svg')"></span>
-              Profiter d'une meilleure qualité de vie au travail
-            </li>
-            <li class="relative pl-9 font-spartan text-[15px] leading-[1.4] flex items-center">
-              <span class="absolute left-0 w-[30px] h-[30px] bg-no-repeat bg-center bg-contain" style="background-image: url('@/assets/layers/pointer.svg')"></span>
-              Augmenter les revenus de votre activité
-            </li>
-            <li class="relative pl-9 font-spartan text-[15px] leading-[1.4] flex items-center">
-              <span class="absolute left-0 w-[30px] h-[30px] bg-no-repeat bg-center bg-contain" style="background-image: url('@/assets/layers/pointer.svg')"></span>
-              Optimiser votre temps grâce à notre interface professionnelle
-            </li>
-          </ul>
+      <div class="flex flex-col gap-4">
+        <ul class="list-none flex flex-col gap-4">
+          <li
+            v-for="(benefit, index) in benefits"
+            :key="index"
+            class="flex items-center gap-2"
+          >
+            <img :src="pointerIcon" alt="pointeur" />
+            {{ benefit }}
+          </li>
+        </ul>
 
-          <button class="mt-8 bg-[#6CC447] text-white px-6 py-3 rounded-lg text-xs font-spartan hover:bg-white hover:text-green-700 transition">
-            En savoir plus sur nos solutions
-          </button>
-        </div>
-
-        <!-- Image à droite -->
-        <div class="flex-1 flex justify-end md:justify-end">
-          <img
-            src="@/assets/images/DocPicto.svg"
-            alt="Docteur professionnel"
-            class="max-h-[300px] w-auto object-contain mr-[170px] md:mr-[170px] sm:mr-0"
-          />
-        </div>
+        <button
+          class="mt-8 bg-primary-500 w-[fit-content] text-white px-6 py-3 rounded-lg text-base hover:bg-white hover:text-primary-600 transition"
+        >
+          En savoir plus sur nos solutions
+        </button>
       </div>
+    </div>
+
+    <div class="p-8">
+      <img
+        src="@/assets/images/DocPicto.svg"
+        alt="Docteur professionnel"
+        class="w-auto object-contain"
+      />
     </div>
   </section>
 </template>
 
 <script setup>
-// aucun script ici pour le moment
+import pointerIcon from "@/assets/layers/pointer.svg";
+
+const benefits = [
+  "Dispenser les meilleurs soins possibles à vos patients",
+  "Profiter d'une meilleure qualité de vie au travail",
+  "Augmenter les revenus de votre activité",
+  "Optimiser votre temps grâce à notre interface professionnelle",
+];
 </script>

@@ -102,3 +102,7 @@ hr {
   width: 100%;
   border-color: var(--color-neutral-200);
 }
+
+button {
+  cursor: pointer;
+}

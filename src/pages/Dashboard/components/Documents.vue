@@ -19,20 +19,6 @@
             </template>
         </div>
     </CardLayout>
-    <!-- <div class="p-4 w-full bg-white rounded-xl inline-flex flex-col gap-4 justify-between items-start overflow-hidden border border-neutral-200">
-    <div class="self-stretch inline-flex justify-between items-center">
-      <div class="text-center justify-start text-zinc-800 text-base font-bold font-['League_Spartan']">
-        Mes documents
-      </div>
-      <div class="text-center justify-start text-green-600 text-base font-bold font-['League_Spartan']">
-        Voir plus
-      </div>
-    </div>
-
-    <hr />
-
-     
-    </div>-->
 </template>
 
 <script setup>

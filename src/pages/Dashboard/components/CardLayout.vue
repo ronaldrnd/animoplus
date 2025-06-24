@@ -11,7 +11,7 @@
       <div>
         <RouterLink
           to="/#"
-          class="cursor-pointer text-center justify-start text-green-600 text-base font-bold font-['League_Spartan']"
+          class="cursor-pointer text-center justify-start text-primary-600 text-base font-bold font-['League_Spartan']"
         >
           Voir plus</RouterLink
         >
