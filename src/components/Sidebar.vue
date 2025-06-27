@@ -69,7 +69,7 @@ const menuItems = [
         label: "Mes animaux",
         icon: animalIcon,
         user: "client",
-        link: "/"
+        link: "/MyAnimals"
     },
     {
         label: "Prise de rendez-vous",
