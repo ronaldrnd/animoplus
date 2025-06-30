@@ -84,10 +84,16 @@ import DocMedical from '@/assets/icons/DocMedical.svg'
 const birthDate = ref('')
 const hiddenDate = ref(null)
 
+const animals = ref([])
+
 function updateFormattedDate(e) {
   const date = new Date(e.target.value)
   const options = { day: 'numeric', month: 'long', year: 'numeric' }
   birthDate.value = date.toLocaleDateString('en-US', options)
+}
+
+function ajouterAnimal(nouvelAnimal) {
+    animals.value.push(nouvelAnimal)
 }
 </script>
 

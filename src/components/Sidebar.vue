@@ -105,7 +105,7 @@ const menuItems = [
         label: "Mes documents",
         icon: documentIcon,
         user: "client",
-        link: "/"
+        link: "/MyDocuments"
     },
     {
         label: "Documents professionnels",
