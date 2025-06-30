@@ -1,78 +1,78 @@
 <template>
-    <div class="overlay">
-        <div class="modal">
-            <div class="modal-header">
-                <h3>Information sur l’animal</h3>
-                <img :src="closeIcon" class="close-icon" alt="Fermer" />
-            </div>
+  <div class="overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Information sur l’animal</h3>
+        <img :src="closeIcon" class="close-icon" alt="Fermer" />
+      </div>
 
-            <form class="form-content">
-                <label>
-                    Nom
-                    <input type="text" placeholder="Entrer le nom" />
-                </label>
+      <form class="form-content">
+        <label>
+          Nom
+          <input type="text" placeholder="Entrer le nom" />
+        </label>
 
-                <label>
-                    Espèce
-                    <select>
-                        <option disabled selected>Sélectionner une espèce</option>
-                    </select>
-                </label>
+        <label>
+          Espèce
+          <select>
+            <option disabled selected>Sélectionner une espèce</option>
+          </select>
+        </label>
 
-                <label>
-                    Race
-                    <select>
-                        <option disabled selected>Sélectionner une race</option>
-                    </select>
-                </label>
+        <label>
+          Race
+          <select>
+            <option disabled selected>Sélectionner une race</option>
+          </select>
+        </label>
 
-                <div class="medical-history">
-                    <img :src="DocMedical" class="icon" alt="historique" />
-                    <span>Historique médical</span>
-                </div>
-
-
-                <textarea placeholder="Écrire ici ..."></textarea>
-
-                <label>
-                    Poids (kg)
-                    <input type="number" placeholder="Poids en kg" />
-                </label>
-
-                <label>
-                    Taille (cm)
-                    <input type="number" placeholder="Taille en cm" />
-                </label>
-
-                <label>
-                    Date de naissance
-                    <div class="custom-date-input" @click="hiddenDate.click()">
-                        <img :src="calendarIcon" class="icon" alt="date" />
-                        <input
-                        type="text"
-                        v-model="birthDate"
-                        placeholder="19 January 2025"
-                        
-                        />
-                    </div>
-                </label>
-
-                <!-- Champ natif invisible déclenché au clic -->
-                <input
-                    type="date"
-                    ref="hiddenDate"
-                    class="hidden-date-input"
-                    @input="updateFormattedDate"
-                />
-
-
-                <div class="form-footer">
-                    <button type="button" class="btn-cancel">Annuler</button>
-                    <button type="submit" class="btn-submit">Ajouter</button>
-                </div>
-            </form>
+        <div class="medical-history">
+          <img :src="DocMedical" class="icon" alt="historique" />
+          <span>Historique médical</span>
         </div>
+
+
+        <textarea placeholder="Écrire ici ..."></textarea>
+
+        <label>
+          Poids (kg)
+          <input type="number" placeholder="Poids en kg" />
+        </label>
+
+        <label>
+          Taille (cm)
+          <input type="number" placeholder="Taille en cm" />
+        </label>
+
+        <label>
+          Date de naissance
+          <div class="custom-date-input" @click="hiddenDate.click()">
+            <img :src="calendarIcon" class="icon" alt="date" />
+            <input
+              type="text"
+              v-model="birthDate"
+              placeholder="19 January 2025"
+                        
+            />
+          </div>
+        </label>
+
+        <!-- Champ natif invisible déclenché au clic -->
+        <input
+          type="date"
+          ref="hiddenDate"
+          class="hidden-date-input"
+          @input="updateFormattedDate"
+        />
+
+
+        <div class="form-footer">
+          <button type="button" class="btn-cancel">Annuler</button>
+          <button type="submit" class="btn-submit">Ajouter</button>
+        </div>
+      </form>
     </div>
+  </div>
 </template>
 
 <script setup>

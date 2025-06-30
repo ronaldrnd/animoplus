@@ -47,13 +47,21 @@
 
         <hr class="w-full border-t border-[rgba(197,197,197,0.5)] mb-5" />
 
-        <!-- Message si aucun animal n'est enregistré -->
-        <div class="text-gray-600 text-[14px]">
-          <img :src="bigPaw" alt="patte" class="mb-2" />
+        <!-- Si aucun animal enregistré -->
+        <div v-if="animals.length === 0" class="no-animal">
+          <img :src="bigPaw" alt="patte" class="empty-icon" />
           <p>Aucun animal enregistré pour le moment</p>
         </div>
-      </div>
 
+        <!-- Sinon on affiche les animaux -->
+        <div v-else class="animal-cards">
+          <div class="animal-card" v-for="(animal, index) in animals" :key="index">
+            <img :src="animal.image" alt="photo animal" class="animal-image" />
+            <p class="animal-name">{{ animal.nom }}</p>
+          </div>
+        </div>
+
+      </div>
     </section>
     <AddAnimal v-if="showModal" @close="showModal = false" />
 
@@ -75,6 +83,13 @@ import AddAnimal from '@/pages/MyAnimals/components/AddAnimal.vue'
 
 // État local pour afficher ou cacher la modale
 const showModal = ref(false)
+
+const animals = ref([
+  {
+    nom: 'Chien',
+    image: new URL('@/assets/images/dog.svg', import.meta.url).href // remplace par le bon chemin
+  }
+])
 </script>
 
 <style scoped>
@@ -100,4 +115,46 @@ const showModal = ref(false)
 .font-league {
   font-family: 'League Spartan', sans-serif;
 }
+
+.animal-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.animal-card {
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  width: 200px;
+  padding: 8px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.animal-image {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.animal-name {
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #333;
+}
+
+.no-animal {
+  color: #666;
+  font-size: 14px;
+  text-align: center;
+}
+
+.empty-icon {
+  width: 32px;
+  margin-bottom: 8px;
+}
+
 </style>
