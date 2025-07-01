@@ -4,6 +4,7 @@ import Login from '@/pages/Authentication/Login.vue'
 import Dashboard from '@/pages/Dashboard/Dashboard.vue'
 import MyAnimals from '@/pages/MyAnimals/MyAnimals.vue'
 import MyDocuments from '@/pages/MyDocuments/MyDocument.vue'
+import ProfilePage from '@/pages/Profile/ProfilePage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +33,11 @@ const router = createRouter({
       path: '/MyDocuments',
       name: 'MyDocuments',
       component: MyDocuments,
+    },
+    {
+      path: '/profil',
+      name: 'Profil',
+      component: ProfilePage,
     },
   ],
 })

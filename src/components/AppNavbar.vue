@@ -19,10 +19,11 @@
       </div>
 
       <!-- Lien profil -->
-      <div class="flex items-center gap-2 cursor-pointer">
-        <img :src="userIcon" alt="user profil" class="feature-icon w-6">
+      <router-link to="/profil" class="flex items-center gap-2 cursor-pointer no-underline">
+        <img :src="userIcon" alt="user profil" class="feature-icon w-6" />
         <span class="text-primary-600 text-base font-normal font-['League_Spartan']">Mon profil</span>
-      </div>
+      </router-link>
+
 
       <!-- Bouton déconnexion -->
       <button
