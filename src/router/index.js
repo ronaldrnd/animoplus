@@ -42,7 +42,7 @@ const router = createRouter({
     },
     {
       path: '/speciality',
-      name: 'Speciality',
+      name: 'speciality',
       component: SpecialityPage,
     },
   ],
