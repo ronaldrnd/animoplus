@@ -117,7 +117,7 @@ const menuItems = [
         label: "Recherche par spécialité",
         icon: searchSpecial,
         user: "client",
-        link: "/"
+        link: "/specialites"
     },
     {
         label: "Gestion de stock",

@@ -5,6 +5,7 @@ import Dashboard from '@/pages/Dashboard/Dashboard.vue'
 import MyAnimals from '@/pages/MyAnimals/MyAnimals.vue'
 import MyDocuments from '@/pages/MyDocuments/MyDocument.vue'
 import ProfilePage from '@/pages/Profile/ProfilePage.vue'
+import SpecialityPage from '@/pages/Speciality/SpecialityPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,6 +39,11 @@ const router = createRouter({
       path: '/profil',
       name: 'Profil',
       component: ProfilePage,
+    },
+    {
+      path: '/speciality',
+      name: 'Speciality',
+      component: SpecialityPage,
     },
   ],
 })
