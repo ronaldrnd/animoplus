@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import searchIcon from '@/assets/icons/location-White.svg'
+import searchIcon from '@/assets/icons/location-white.svg'
 import locationIcon from '@/assets/icons/location.svg'
 import phoneIcon from '@/assets/icons/phone.svg'
 import clockIcon from '@/assets/icons/clock.svg'
