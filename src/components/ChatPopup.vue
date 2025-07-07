@@ -1,19 +1,14 @@
 <template>
   <!-- Fenêtre principale de la popup de chat -->
-  <div class="fixed bottom-5 right-5 w-[450px] rounded-[15px] shadow-lg bg-white font-sans overflow-hidden z-[1000]">
+  <div class="fixed bottom-5 right-5 w-[450px] rounded-[15px] shadow-lg bg-white overflow-hidden z-[1000]">
 
-    <!-- En-tête avec titre et statut "online" -->
-    <div class="bg-green-600 px-4 py-2 flex justify-between items-center border-b border-gray-300">
+    <div class="bg-green-600 p-4 flex justify-between items-center border-b border-gray-300">
       <div class="flex items-center gap-2 flex-1">
-        <!-- Avatar -->
-        <img :src="chatIcon" alt="Avatar IA" class="w-5 h-5" />
+        <img :src="chatIcon" alt="Avatar IA" />
         <span class="text-white font-league">Conseiller Virtuel IA</span>
       </div>
 
-      <div class="flex items-center gap-1.5">
-        <img :src="Ellipse" alt="Ellipse" class="Ellipse.svg" />
-        <span class="text-white text-sm font-league font-thin">Online</span>
-      </div>
+      <img @click="$emit('close-pop-up')" :src="closeIcon" alt="close" class="cursor-pointer" >
     </div>
 
     <!-- Corps du message -->
@@ -46,13 +41,16 @@
 <script setup>
 // Importation des icônes
 import chatIcon from '@/assets/icons/chat-avatar.svg'
-import Ellipse from '@/assets/layers/Ellipse.svg'
+import closeIcon from '@/assets/icons/close-white.svg'
 import sendIcon from '@/assets/icons/send-icon.svg'
+import { ref } from 'vue';
+
+const userMessage = ref("")
+
+const emit = defineEmits(['close-pop-up']);
 </script>
 
 <style scoped>
-
-/* Avatar dans le corps du message*/
 .chat-avatar-body {
   width: 30px;
   height: 30px;
@@ -62,7 +60,6 @@ import sendIcon from '@/assets/icons/send-icon.svg'
   box-sizing: content-box;
 }
 
-/* Bulle de message (bord, couleur, padding) */
 .message-bubble {
   max-width: 95%;
   padding: 10px 16px;

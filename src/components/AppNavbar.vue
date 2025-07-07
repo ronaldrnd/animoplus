@@ -10,19 +10,20 @@
       </a>
     </div>
 
-    <!-- Droite : avatar, profil et déconnexion -->
+    <!-- Droite : Bot, profil et déconnexion -->
     <div class="flex items-center gap-8 flex-wrap">
 
-      <!-- Avatar -->
+      <!-- Bot -->
       <div class="p-2 rounded-full outline outline-1 outline-primary-600 flex items-center justify-center cursor-pointer">
-        <img :src="botIcon" alt="bot icon" class="feature-icon w-6">
+        <img @click="$emit('show-pop-up')" :src="botIcon" alt="bot icon" class="feature-icon w-6">
       </div>
 
       <!-- Lien profil -->
-      <div class="flex items-center gap-2 cursor-pointer">
-        <img :src="userIcon" alt="user profil" class="feature-icon w-6">
+      <router-link to="/profil" class="flex items-center gap-2 cursor-pointer no-underline">
+        <img :src="userIcon" alt="user profil" class="feature-icon w-6" />
         <span class="text-primary-600 text-base font-normal font-['League_Spartan']">Mon profil</span>
-      </div>
+      </router-link>
+
 
       <!-- Bouton déconnexion -->
       <button
@@ -52,6 +53,8 @@ defineProps({
     default: ''
   }
 })
+
+const emit = defineEmits(['show-pop-up']);
 
 function logout() {
   auth.isAuthenticated = false

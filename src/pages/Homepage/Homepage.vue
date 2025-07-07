@@ -31,12 +31,12 @@
 <script setup>
 import HeroSection from './components/HeroSection.vue';
 import ActionCards from './components/ActionCards.vue';
-import ChatPopup from './components/ChatPopup.vue';
 import ProfessionalsSection from './components/ProfessionalsSection.vue';
 import SpecialityList from './components/SpecialityList.vue';
 import OptiCare from './components/OptiCare.vue';
 import CompanionPartner from './components/CompanionPartner.vue';
 import QuestionsBanner from './components/QuestionsBanner.vue';
+
 
 import BubbleGreen from '@/assets/bubbles/1_green.vue';
 import BubbleYellow from '@/assets/bubbles/1_yellow.vue';
