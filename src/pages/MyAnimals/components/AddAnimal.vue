@@ -1,9 +1,9 @@
 <template>
   <div class="overlay">
-    <div class="modal">
-      <div class="modal-header">
-        <h3>Information sur l’animal</h3>
-        <img :src="closeIcon" class="close-icon" alt="Fermer" />
+    <div class="p-6 bg-white rounded-[10px]" style="width: 450px;max-width: 95%;">
+      <div class="flex justify-between items-center">
+        <h3 class="font-bold">Information sur l’animal</h3>
+        <img @click="$emit('close')" :src="closeIcon" class="cursor-pointer" alt="Fermer" />
       </div>
 
       <form class="form-content">
@@ -65,10 +65,9 @@
           @input="updateFormattedDate"
         />
 
-
         <div class="form-footer">
-          <button type="button" class="btn-cancel">Annuler</button>
-          <button type="submit" class="btn-submit">Ajouter</button>
+          <button @click="$emit('close')" type="button" class="btn-cancel">Annuler</button>
+          <button @click="$emit('close')" type="submit" class="btn-submit">Ajouter</button>
         </div>
       </form>
     </div>
@@ -80,6 +79,14 @@ import { ref } from 'vue'
 import closeIcon from '@/assets/icons/close-circle.svg'
 import calendarIcon from '@/assets/icons/small-calendar.svg'
 import DocMedical from '@/assets/icons/DocMedical.svg'
+
+
+const props = defineProps({
+    close: {
+        type: Boolean,
+        default: false
+    }
+});
 
 const birthDate = ref('')
 const hiddenDate = ref(null)
@@ -98,44 +105,15 @@ function ajouterAnimal(nouvelAnimal) {
 </script>
 
 <style scoped>
-/* Arrière-plan */
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(163, 163, 163, 0.20);
+  background: rgba(47, 47, 47, 0.289);
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 1rem;
   z-index: 1000;
-}
-
-/* Boîte principale réduite */
-.modal {
-  background: #fff;
-  border-radius: 10px;
-  padding: 8px 16px;
-  width: 450px;
-  max-width: 95%;
-}
-
-/* En-tête */
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.modal-header h3 {
-  color: #4B5563;  
-  font-size: 14px;
-  font-weight: bold;
-}
-
-.close-icon {
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
 }
 
 /* Formulaire */

@@ -26,13 +26,13 @@ const router = createRouter({
       component: Dashboard,
     },
     {
-      path: '/MyAnimals',
-      name: 'MyAnimals',
+      path: '/animals',
+      name: 'animals',
       component: MyAnimals,
     },
     {
-      path: '/MyDocuments',
-      name: 'MyDocuments',
+      path: '/documents',
+      name: 'documents',
       component: MyDocuments,
     },
     {

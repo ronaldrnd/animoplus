@@ -69,7 +69,7 @@ const menuItems = [
         label: "Mes animaux",
         icon: animalIcon,
         user: "client",
-        link: "/MyAnimals"
+        link: "/animals"
     },
     {
         label: "Prise de rendez-vous",
@@ -105,7 +105,7 @@ const menuItems = [
         label: "Mes documents",
         icon: documentIcon,
         user: "client",
-        link: "/MyDocuments"
+        link: "/documents"
     },
     {
         label: "Documents professionnels",
