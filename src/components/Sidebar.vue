@@ -63,7 +63,7 @@ const menuItems = [
         label: "Agenda",
         icon: appointmentIcon,
         user: "pro",
-        link: "/"
+        link: "/diaryPro"
     },
     {
         label: "Mes animaux",
@@ -75,31 +75,31 @@ const menuItems = [
         label: "Prise de rendez-vous",
         icon: appointmentIcon,
         user: "client",
-        link: "/"
+        link: "/appointment"
     },
     {
         label: "Messagerie",
         icon: chatIcon,
-        user: "",
-        link: "/"
+        user: "client",
+        link: "/messaging"
     },
     {
         label: "Gestion des services",
         icon: animalIcon,
         user: "pro",
-        link: "/"
+        link: "/services"
     },
     {
         label: "Tâches",
         icon: taskIcon,
         user: "pro",
-        link: "/"
+        link: "/tasks"
     },
     {
         label: "Comptabilité",
         icon: sheetIcon,
         user: "pro",
-        link: "/"
+        link: "/accounting"
     },
     {
         label: "Mes documents",
@@ -111,13 +111,13 @@ const menuItems = [
         label: "Documents professionnels",
         icon: documentIcon,
         user: "pro",
-        link: "/"
+        link: "/documentsPro"
     },
     {
         label: "Recherche par spécialité",
         icon: searchSpecial,
         user: "client",
-        link: "/specialites"
+        link: "/speciality"
     },
     {
         label: "Gestion de stock",

@@ -6,6 +6,13 @@ import MyAnimals from '@/pages/MyAnimals/MyAnimals.vue'
 import MyDocuments from '@/pages/MyDocuments/MyDocument.vue'
 import ProfilePage from '@/pages/Profile/ProfilePage.vue'
 import SpecialityPage from '@/pages/Speciality/SpecialityPage.vue'
+import Messaging from '@/pages/messaging/Messaging.vue'
+import Appointment from '@/pages/appointment/components/AppointmentPage.vue'
+import Services from '@/pages/Services/components/ServicesTable.vue'
+import Tasks from '@/pages/Tasks/components/TasksComponents.vue'
+import Accounting from '@/pages/Accounting/Accounting.vue'
+import DocumentsPro from '@/pages/DocumentsPro/DocumentsPro.vue'
+import DiaryPro from '@/pages/DiaryPro/DiaryPro.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,6 +51,41 @@ const router = createRouter({
       path: '/speciality',
       name: 'Speciality',
       component: SpecialityPage,
+    },
+    {
+      path: '/messaging',
+      name: 'messaging',
+      component: Messaging,
+    },
+    {
+      path: '/appointment',
+      name: 'appointment',
+      component: Appointment,
+    },
+    {
+      path: '/services',
+      name: 'services',
+      component: Services,
+    },
+    {
+      path: '/tasks',
+      name: 'tasks',
+      component: Tasks,
+    },
+    {
+      path: '/accounting',
+      name: 'accounting',
+      component: Accounting,
+    },
+    {
+      path: '/documentsPro',
+      name: 'documentsPro',
+      component: DocumentsPro,
+    },
+    {
+      path: '/diaryPro',
+      name: 'diaryPro',
+      component: DiaryPro,
     },
   ],
 })
