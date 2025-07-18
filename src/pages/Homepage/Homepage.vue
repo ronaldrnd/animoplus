@@ -19,13 +19,11 @@
     <div class="max-w-[1400px] flex flex-col gap-[80px] items-center justify-center">
       <HeroSection />
       <ActionCards />
-      <ChatPopup />
       <ProfessionalsSection />
       <SpecialityList />
       <OptiCare />
       <CompanionPartner />
       <QuestionsBanner />
-
     </div>
   </div>
 </template>
@@ -33,7 +31,6 @@
 <script setup>
 import HeroSection from './components/HeroSection.vue';
 import ActionCards from './components/ActionCards.vue';
-import ChatPopup from './components/ChatPopup.vue';
 import ProfessionalsSection from './components/ProfessionalsSection.vue';
 import SpecialityList from './components/SpecialityList.vue';
 import OptiCare from './components/OptiCare.vue';
