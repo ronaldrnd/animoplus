@@ -99,7 +99,7 @@ import phoneIcon from '@/assets/icons/phone.svg'
 import locationIcon from '@/assets/icons/location.svg'
 import clockIcon from '@/assets/icons/clock.svg'
 import ellipseIcon from '@/assets/layers/Ellipse.svg'
-import arrowIcon from '@/assets/icons/arrowLR.svg'
+import arrowIcon from '@/assets/icons/ArrowLR.svg'
 </script>
 
 <style scoped>

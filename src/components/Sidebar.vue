@@ -6,7 +6,7 @@
 
             <!-- Menu principal -->
             <nav class="flex flex-col gap-8">
-                <RouterLink v-for="item in menuItems" :key="item.label" :to="item.link"
+                <RouterLink v-for="item in filteredMenuItems" :key="item.label" :to="item.link"
                     class="flex items-center gap-4 font-medium text-base hover:underline transition"
                     :class="route.path === item.link ? 'text-accent-400' : 'text-white'"
                     >
@@ -31,6 +31,7 @@
 
 <script setup>
 import { useRoute } from 'vue-router';
+import { auth } from '@/stores/auth.js'
 
 import dashboardIcon from '@/assets/icons/dashboard.svg';
 import animalIcon from '@/assets/icons/animal.svg';
@@ -56,7 +57,7 @@ const menuItems = [
     {
         label: "Tableau de bord",
         icon: dashboardIcon,
-        user: "",
+        user: ["client", "pro"],
         link: "/dashboard"
     },
     {
@@ -126,4 +127,9 @@ const menuItems = [
         link: "/stockManagement"
     },
 ];
+
+const filteredMenuItems = menuItems.filter(item => {
+    return item.user === "" || item.user === auth.role || (Array.isArray(item.user) && item.user.includes(auth.role));
+});
+
 </script>

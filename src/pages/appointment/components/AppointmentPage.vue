@@ -379,7 +379,7 @@
 <script setup>
 // Mets ici le chemin selon ta structure réelle
 import smallCalendar from '@/assets/icons/appointment.svg'
-import arrowLR from '@/assets/icons/arrowLR.svg'
+import arrowLR from '@/assets/icons/ArrowLR.svg'
 import arrowDown from '@/assets/icons/chevron-down.svg'
 import locationIcon from '@/assets/icons/location-white.svg'
 import searchIcon from '@/assets/icons/search-icon.svg'

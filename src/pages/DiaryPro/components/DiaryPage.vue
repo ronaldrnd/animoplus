@@ -249,7 +249,7 @@ import calendarIcon from '@/assets/icons/calendar.svg'
 import ellipseIcon from '@/assets/layers/Ellipse.svg'
 import googleMeetIcon from '@/assets/icons/google-meet.svg'
 
-import arrowLR from '@/assets/icons/arrowLR.svg'
+import arrowLR from '@/assets/icons/ArrowLR.svg'
 import arrowDown from '@/assets/icons/chevron-down.svg'
 import locationIcon from '@/assets/icons/location-white.svg'
 import searchIcon from '@/assets/icons/search-icon.svg'

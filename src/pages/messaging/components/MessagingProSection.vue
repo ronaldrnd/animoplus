@@ -220,7 +220,6 @@ const conversations = [
   border-radius: 12px;
   padding: 24px;
   background-color: #fff;
-  font-family: "League Spartan";
 }
 /* header */
 .header {
@@ -269,7 +268,6 @@ const conversations = [
   border: none;
   outline: none;
   font-size: 14px;
-  font-family: "League Spartan";
   color: #2E2E30;
   background: transparent;
 }
@@ -288,7 +286,6 @@ const conversations = [
   font-weight: bold;
   margin-bottom: 15px;
   color: #2E2E30;
-  font-family: "League Spartan";
 }
 .messages-header {
   display: flex;
@@ -305,7 +302,6 @@ const conversations = [
   border-radius: 8px;
   padding: 6px 12px;
   font-size: 14px;
-  font-family: "League Spartan";
   color: #4B5563;
   margin-bottom: 20px;
   cursor: pointer;
@@ -519,7 +515,6 @@ const conversations = [
   color: var(--Neutral---600, #4B5563);
   overflow: hidden;
   text-overflow: ellipsis;
-  font-family: "League Spartan";
 }
 
 /* conversation */
@@ -557,7 +552,6 @@ const conversations = [
   padding: 20px 20px;
   max-width: 340px;
   line-height: 1.5;
-  font-family: "League Spartan";
   box-shadow: 0 1px 3px 0 rgba(34,34,34,0.04);
   word-break: break-word;
 }
@@ -581,7 +575,6 @@ const conversations = [
   font-size: 15px;
   color: #232323;
   background: transparent;
-  font-family: "League Spartan";
 }
 .send-btn {
   background: none;

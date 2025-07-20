@@ -111,15 +111,13 @@ const specialities = [
   font-weight: bold;
   margin: 10px 0 20px;
   color: var(--Neutral---600, #4B5563);
-  font-family: "League Spartan";
   line-height: normal;
 }
 
 .speciality-description {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--Neutral---600, #4B5563);
   text-align: center;
-  font-family: "League Spartan";
   font-style: normal;
   font-weight: 400;
   line-height: normal;
