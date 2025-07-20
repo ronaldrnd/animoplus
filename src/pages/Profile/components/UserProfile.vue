@@ -32,10 +32,15 @@
       </div>
 
       <!-- Bouton Ajouter un animal -->
-      <button @click="addAnimal"
+      <button v-if="isClient" @click="addAnimal"
         class="bg-accent-500 text-white px-4 py-3 rounded-[14px] shadow-md flex items-center gap-2">
         <img :src="animalIcon" alt="icone patte" class="w-fit" />
         Ajouter un animal
+      </button>
+      <button v-else 
+        class="bg-accent-500 text-white px-4 py-3 rounded-[14px] shadow-md flex items-center gap-2">
+        <img :src="animalIcon" alt="icone patte" class="w-fit" />
+        Ajouter un service
       </button>
     </div>
 
@@ -48,7 +53,7 @@
     </Alert>
 
     <!-- Section Animaux -->
-    <div class="flex flex-col gap-4">
+    <div v-if="isClient" class="flex flex-col gap-4">
       <div class="flex items-center font-bold gap-4">
         <img :src="petIcon" alt="icone animal" />
         <h3>Animaux de Compagnie</h3>
@@ -91,6 +96,13 @@ import Alert from '@/components/common/Alert.vue'
 
 import AddAnimal from '@/pages/MyAnimals/components/AddAnimal.vue'
 import { ref } from 'vue'
+
+const props = defineProps({
+  isClient: {
+    type: Boolean,
+    default: true
+  }
+})
 
 const animals = ref([
   {

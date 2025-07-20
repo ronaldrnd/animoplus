@@ -6,7 +6,7 @@
 
             <!-- Menu principal -->
             <nav class="flex flex-col gap-8">
-                <RouterLink v-for="item in menuItems" :key="item.label" :to="item.link"
+                <RouterLink v-for="item in filteredMenuItems" :key="item.label" :to="item.link"
                     class="flex items-center gap-4 font-medium text-base hover:underline transition"
                     :class="route.path === item.link ? 'text-accent-400' : 'text-white'"
                     >
@@ -31,6 +31,7 @@
 
 <script setup>
 import { useRoute } from 'vue-router';
+import { auth } from '@/stores/auth.js'
 
 import dashboardIcon from '@/assets/icons/dashboard.svg';
 import animalIcon from '@/assets/icons/animal.svg';
@@ -56,14 +57,14 @@ const menuItems = [
     {
         label: "Tableau de bord",
         icon: dashboardIcon,
-        user: "",
+        user: ["client", "pro"],
         link: "/dashboard"
     },
     {
         label: "Agenda",
         icon: appointmentIcon,
         user: "pro",
-        link: "/"
+        link: "/diaryPro"
     },
     {
         label: "Mes animaux",
@@ -75,31 +76,31 @@ const menuItems = [
         label: "Prise de rendez-vous",
         icon: appointmentIcon,
         user: "client",
-        link: "/"
+        link: "/appointment"
     },
     {
         label: "Messagerie",
         icon: chatIcon,
-        user: "",
-        link: "/"
+        user: "client",
+        link: "/messaging"
     },
     {
         label: "Gestion des services",
         icon: animalIcon,
         user: "pro",
-        link: "/"
+        link: "/services"
     },
     {
         label: "Tâches",
         icon: taskIcon,
         user: "pro",
-        link: "/"
+        link: "/tasks"
     },
     {
         label: "Comptabilité",
         icon: sheetIcon,
         user: "pro",
-        link: "/"
+        link: "/accounting"
     },
     {
         label: "Mes documents",
@@ -111,7 +112,7 @@ const menuItems = [
         label: "Documents professionnels",
         icon: documentIcon,
         user: "pro",
-        link: "/"
+        link: "/documentsPro"
     },
     {
         label: "Recherche par spécialité",
@@ -123,7 +124,12 @@ const menuItems = [
         label: "Gestion de stock",
         icon: stockIcon,
         user: "pro",
-        link: "/"
+        link: "/stockManagement"
     },
 ];
+
+const filteredMenuItems = menuItems.filter(item => {
+    return item.user === "" || item.user === auth.role || (Array.isArray(item.user) && item.user.includes(auth.role));
+});
+
 </script>

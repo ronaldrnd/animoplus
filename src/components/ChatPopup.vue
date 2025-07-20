@@ -64,7 +64,6 @@ const emit = defineEmits(['close-pop-up']);
   max-width: 95%;
   padding: 10px 16px;
   color: #43A047;
-  font-family: "League Spartan";
   font-size: 15px;
   font-weight: 500;
   line-height: 24px;
