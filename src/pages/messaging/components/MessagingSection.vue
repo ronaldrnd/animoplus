@@ -140,11 +140,6 @@ const conversations = [
   font-family: "League Spartan";
 }
 
-.messaging-container {
-  display: flex;
-  gap: 20px;
-}
-
 /* Titre + trait */
 .header {
   padding: 24px;
@@ -197,14 +192,6 @@ const conversations = [
 .sidebar {
   width: 30%;
   padding: 20px;
-}
-
-.title {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 15px;
-  color: #2E2E30;
-  font-family: "League Spartan";
 }
 
 .messages-header {

@@ -123,7 +123,7 @@ const menuItems = [
         label: "Gestion de stock",
         icon: stockIcon,
         user: "pro",
-        link: "/"
+        link: "/stockManagement"
     },
 ];
 </script>

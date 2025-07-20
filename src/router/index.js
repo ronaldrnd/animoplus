@@ -13,6 +13,7 @@ import Tasks from '@/pages/Tasks/components/TasksComponents.vue'
 import Accounting from '@/pages/Accounting/Accounting.vue'
 import DocumentsPro from '@/pages/DocumentsPro/DocumentsPro.vue'
 import DiaryPro from '@/pages/DiaryPro/DiaryPro.vue'
+import StockPage from '@/pages/StockManagement/StockPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -86,6 +87,11 @@ const router = createRouter({
       path: '/diaryPro',
       name: 'diaryPro',
       component: DiaryPro,
+    },
+    {
+      path: '/stockManagement',
+      name: 'stockManagement',
+      component: StockPage,
     },
   ],
 })
