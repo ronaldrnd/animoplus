@@ -1,82 +1,69 @@
 <template>
-  <div class="overlay">
-    <div class="p-6 bg-white rounded-[10px]" style="width: 450px;max-width: 95%;">
-      <div class="flex justify-between items-center">
-        <h3 class="font-bold">Information sur l’animal</h3>
-        <img @click="$emit('close')" :src="closeIcon" class="cursor-pointer" alt="Fermer" />
+  <BaseModal title="Information sur l’animal" @close="showModal = false" :footer="true">
+    <form class="form-content">
+      <label>
+        Nom
+        <input type="text" placeholder="Entrer le nom" />
+      </label>
+  
+      <label>
+        Espèce
+        <select>
+          <option disabled selected>Sélectionner une espèce</option>
+        </select>
+      </label>
+  
+      <label>
+        Race
+        <select>
+          <option disabled selected>Sélectionner une race</option>
+        </select>
+      </label>
+  
+      <div class="medical-history">
+        <img :src="DocMedical" class="icon" alt="historique" />
+        <span>Historique médical</span>
       </div>
-
-      <form class="form-content">
-        <label>
-          Nom
-          <input type="text" placeholder="Entrer le nom" />
-        </label>
-
-        <label>
-          Espèce
-          <select>
-            <option disabled selected>Sélectionner une espèce</option>
-          </select>
-        </label>
-
-        <label>
-          Race
-          <select>
-            <option disabled selected>Sélectionner une race</option>
-          </select>
-        </label>
-
-        <div class="medical-history">
-          <img :src="DocMedical" class="icon" alt="historique" />
-          <span>Historique médical</span>
+  
+  
+      <textarea placeholder="Écrire ici ..."></textarea>
+  
+      <label>
+        Poids (kg)
+        <input type="number" placeholder="Poids en kg" />
+      </label>
+  
+      <label>
+        Taille (cm)
+        <input type="number" placeholder="Taille en cm" />
+      </label>
+  
+      <label>
+        Date de naissance
+        <div class="custom-date-input" @click="hiddenDate.click()">
+          <img :src="calendarIcon" class="icon" alt="date" />
+          <input
+            type="text"
+            v-model="birthDate"
+            placeholder="19 January 2025"
+                      
+          />
         </div>
-
-
-        <textarea placeholder="Écrire ici ..."></textarea>
-
-        <label>
-          Poids (kg)
-          <input type="number" placeholder="Poids en kg" />
-        </label>
-
-        <label>
-          Taille (cm)
-          <input type="number" placeholder="Taille en cm" />
-        </label>
-
-        <label>
-          Date de naissance
-          <div class="custom-date-input" @click="hiddenDate.click()">
-            <img :src="calendarIcon" class="icon" alt="date" />
-            <input
-              type="text"
-              v-model="birthDate"
-              placeholder="19 January 2025"
-                        
-            />
-          </div>
-        </label>
-
-        <!-- Champ natif invisible déclenché au clic -->
-        <input
-          type="date"
-          ref="hiddenDate"
-          class="hidden-date-input"
-          @input="updateFormattedDate"
-        />
-
-        <div class="form-footer">
-          <button @click="$emit('close')" type="button" class="btn-cancel">Annuler</button>
-          <button @click="$emit('close')" type="submit" class="btn-submit">Ajouter</button>
-        </div>
-      </form>
-    </div>
-  </div>
+      </label>
+  
+      <input
+        type="date"
+        ref="hiddenDate"
+        class="hidden-date-input"
+        @input="updateFormattedDate"
+      />
+    </form>
+  </BaseModal>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import closeIcon from '@/assets/icons/close-circle.svg'
+import BaseModal from '@/components/common/BaseModal.vue';
 import calendarIcon from '@/assets/icons/small-calendar.svg'
 import DocMedical from '@/assets/icons/DocMedical.svg'
 
@@ -91,31 +78,14 @@ const props = defineProps({
 const birthDate = ref('')
 const hiddenDate = ref(null)
 
-const animals = ref([])
-
 function updateFormattedDate(e) {
   const date = new Date(e.target.value)
   const options = { day: 'numeric', month: 'long', year: 'numeric' }
   birthDate.value = date.toLocaleDateString('en-US', options)
 }
-
-function ajouterAnimal(nouvelAnimal) {
-    animals.value.push(nouvelAnimal)
-}
 </script>
 
 <style scoped>
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(47, 47, 47, 0.289);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem;
-  z-index: 1000;
-}
-
 /* Formulaire */
 .form-content {
   margin-top: 12px;
@@ -199,32 +169,5 @@ textarea {
   opacity: 0;
   pointer-events: none;
   height: 0;
-}
-
-/* Pied du formulaire */
-.form-footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  margin-top: 15px;
-}
-
-.btn-cancel {
-  background: transparent;
-  border: none;
-  color: #4B5563;
-  font-size: 13px;
-  cursor: pointer;
-  margin-right: 20px;
-}
-
-.btn-submit {
-  background: #43A047;
-  border: none;
-  color: white;
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 13px;
-  cursor: pointer;
 }
 </style>
