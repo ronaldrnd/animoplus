@@ -121,7 +121,7 @@ router.beforeEach((to, from, next) => {
 
   // Si route protégée et qu’on n’est PAS connecté → redirection vers /ask-appointment
   if (to.meta.requiresAuth && !isAuthenticated) {
-    return next('/ask-appointment')
+    return next('/login')
   }
 
   return next()
