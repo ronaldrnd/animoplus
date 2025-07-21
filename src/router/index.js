@@ -2,17 +2,15 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Homepage from '../pages/Homepage/Homepage.vue'
 import Login from '@/pages/Authentication/Login.vue'
 import Dashboard from '@/pages/Dashboard/Dashboard.vue'
-import MyAnimals from '@/pages/MyAnimals/MyAnimals.vue'
-import MyDocuments from '@/pages/MyDocuments/MyDocument.vue'
+import Animals from '@/pages/Animals/Animals.vue'
+import Documents from '@/pages/Documents/Documents.vue'
 import ProfilePage from '@/pages/Profile/ProfilePage.vue'
 import SpecialityPage from '@/pages/Speciality/SpecialityPage.vue'
-import Messaging from '@/pages/messaging/Messaging.vue'
+import Message from '@/pages/Message/Message.vue'
 import Appointment from '@/pages/appointment/components/AppointmentPage.vue'
 import Services from '@/pages/Services/components/ServicesTable.vue'
 import Tasks from '@/pages/Tasks/components/TasksComponents.vue'
 import Accounting from '@/pages/Accounting/Accounting.vue'
-import DocumentsPro from '@/pages/DocumentsPro/DocumentsPro.vue'
-import DiaryPro from '@/pages/DiaryPro/DiaryPro.vue'
 import StockPage from '@/pages/StockManagement/StockPage.vue'
 
 const router = createRouter({
@@ -36,16 +34,16 @@ const router = createRouter({
     {
       path: '/animals',
       name: 'animals',
-      component: MyAnimals,
+      component: Animals,
     },
     {
       path: '/documents',
       name: 'documents',
-      component: MyDocuments,
+      component: Documents,
     },
     {
       path: '/profil',
-      name: 'Profil',
+      name: 'profil',
       component: ProfilePage,
     },
     {
@@ -54,9 +52,9 @@ const router = createRouter({
       component: SpecialityPage,
     },
     {
-      path: '/messaging',
-      name: 'messaging',
-      component: Messaging,
+      path: '/message',
+      name: 'message',
+      component: Message,
     },
     {
       path: '/appointment',
@@ -77,16 +75,6 @@ const router = createRouter({
       path: '/accounting',
       name: 'accounting',
       component: Accounting,
-    },
-    {
-      path: '/documentsPro',
-      name: 'documentsPro',
-      component: DocumentsPro,
-    },
-    {
-      path: '/diaryPro',
-      name: 'diaryPro',
-      component: DiaryPro,
     },
     {
       path: '/stockManagement',

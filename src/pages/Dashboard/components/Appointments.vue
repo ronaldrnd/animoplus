@@ -1,5 +1,5 @@
 <template>
-    <CardLayout title="Mes rendez-vous">
+    <CardLayout title="Mes rendez-vous" link="/appointment">
         <div class="self-stretch flex flex-col justify-start items-start gap-2">
             <div class="self-stretch inline-flex justify-center items-center gap-5">
                 <img :src="calendarIcon" class="text-primary-600" alt="appointment" />

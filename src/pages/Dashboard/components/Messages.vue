@@ -1,5 +1,5 @@
 <template>
-    <CardLayout title="Mes messages">
+    <CardLayout title="Mes messages" link="/message">
         <div class="self-stretch inline-flex flex-col justify-start items-center">
             <div v-for="(message, index) in messages" :key="index"
                 class="self-stretch px-6 py-3 border-b border-slate-100 flex flex-col justify-center items-center gap-2.5"

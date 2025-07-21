@@ -10,7 +10,7 @@
       </div>
       <div>
         <RouterLink
-          to="/#"
+          :to="link"
           class="cursor-pointer text-center justify-start text-primary-600 text-base font-bold font-['League_Spartan']"
         >
           Voir plus</RouterLink
@@ -30,6 +30,10 @@ const props = defineProps({
     title: {
         type: String,
         default: "Titre",
+    },
+    link: {
+        type: String,
+        default: "/#",
     },
 });
 </script>

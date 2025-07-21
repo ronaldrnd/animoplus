@@ -7,12 +7,10 @@
             <!-- Menu principal -->
             <nav class="flex flex-col gap-8">
                 <RouterLink v-for="item in filteredMenuItems" :key="item.label" :to="item.link"
-                    class="flex items-center gap-4 font-medium text-base hover:underline transition"
-                    :class="route.path === item.link ? 'text-accent-400' : 'text-white'"
+                    class="flex items-center gap-4 text-base hover:text-accent-400 transition"
+                    :class="route.path === item.link ? 'text-accent-400 font-bold' : 'text-white'"
                     >
-                    <img :src="item.icon" alt="menu icon" class="feature-icon w-6"
-                        :class="{ 'filter-accent': route.path === item.link }"
-                         />
+                    <component :is="item.icon" :class="route.path === item.link ? 'text-accent-400 font-bold' : 'text-white'"/>
                     <span>{{ item.label }}</span>
                 </RouterLink>
             </nav>
@@ -20,8 +18,9 @@
 
         <!-- Espace client -->
         <div>
-            <RouterLink to="/"
-                class="flex items-center gap-4 text-white font-['League_Spartan'] font-medium text-base hover:underline transition">
+            <RouterLink to="/profil"
+                :class="route.name === 'profil' ? 'text-accent-400 font-bold' : 'text-white'"
+                class="flex items-center gap-4 text-white font-medium text-base hover:text-accent-400 transition">
                 <img :src="userIconWhite" alt="user profil" class="feature-icon w-6">
                 <span>Espace client</span>
             </RouterLink>
@@ -33,15 +32,16 @@
 import { useRoute } from 'vue-router';
 import { auth } from '@/stores/auth.js'
 
-import dashboardIcon from '@/assets/icons/dashboard.svg';
-import animalIcon from '@/assets/icons/animal.svg';
-import appointmentIcon from '@/assets/icons/appointment.svg';
-import chatIcon from '@/assets/icons/chat.svg';
-import documentIcon from '@/assets/icons/document.svg';
-import searchSpecial from '@/assets/icons/special-search.svg';
-import stockIcon from '@/assets/icons/stock-management.svg';
-import sheetIcon from '@/assets/icons/sheet-icon.svg';
-import taskIcon from '@/assets/icons/task.svg';
+import dashboardIcon from '@/assets/icons/sidebar/DasboardIcon.vue';
+import animalIcon from '@/assets/icons/sidebar/AnimalIcon.vue';
+import appointmentIcon from '@/assets/icons/sidebar/AppointmentIcon.vue';
+import chatIcon from '@/assets/icons/sidebar/ChatIcon.vue';
+import documentIcon from '@/assets/icons/sidebar/DocumentIcon.vue';
+import searchSpecial from '@/assets/icons/sidebar/SearchSpecial.vue';
+import stockIcon from '@/assets/icons/sidebar/StockIcon.vue';
+import sheetIcon from '@/assets/icons/sidebar/SheetIcon.vue';
+import taskIcon from '@/assets/icons/sidebar/TaskIcon.vue';
+
 import userIconWhite from '@/assets/icons/user-profil-white.svg';
 
 const route = useRoute();
@@ -64,7 +64,7 @@ const menuItems = [
         label: "Agenda",
         icon: appointmentIcon,
         user: "pro",
-        link: "/diaryPro"
+        link: "/appointment"
     },
     {
         label: "Mes animaux",
@@ -82,7 +82,7 @@ const menuItems = [
         label: "Messagerie",
         icon: chatIcon,
         user: "client",
-        link: "/messaging"
+        link: "/message"
     },
     {
         label: "Gestion des services",
@@ -112,7 +112,7 @@ const menuItems = [
         label: "Documents professionnels",
         icon: documentIcon,
         user: "pro",
-        link: "/documentsPro"
+        link: "/documents"
     },
     {
         label: "Recherche par spécialité",

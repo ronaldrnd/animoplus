@@ -94,7 +94,7 @@ import editIcon from '@/assets/icons/edit-icon.svg'
 import TitleDashboard from '@/components/common/TitleDashboard.vue'
 import Alert from '@/components/common/Alert.vue'
 
-import AddAnimal from '@/pages/MyAnimals/components/AddAnimal.vue'
+import AddAnimal from '@/pages/Animals/components/AddAnimal.vue'
 import { ref } from 'vue'
 
 const props = defineProps({

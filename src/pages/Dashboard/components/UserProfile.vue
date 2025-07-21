@@ -1,5 +1,5 @@
 <template>
-    <CardLayout title="Mon profil">
+    <CardLayout title="Mon profil" link="/profil">
         <div class="self-stretch inline-flex flex-col justify-start items-start gap-6">
             <div class="self-stretch inline-flex justify-start items-start gap-6">
                 <img class="w-20 h-20 rounded-full"

@@ -1,5 +1,5 @@
 <template>
-    <CardLayout title="Mes documents">
+    <CardLayout title="Mes documents" link="/documents">
         <div class="self-stretch flex flex-col justify-start items-start gap-2.5">
             <template v-for="(doc, index) in documents" :key="index">
                 <div class="self-stretch h-14 inline-flex justify-start items-center gap-6">

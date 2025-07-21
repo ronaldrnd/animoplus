@@ -1,13 +1,13 @@
 <template>
     <section class="border border-neutral-200 rounded-[10px] p-8 flex flex-col gap-8">
-      <TitleDashboard title="Mes Documents Médicaux" />
+        <TitleDashboard title="Mes Documents Médicaux" />
 
         <hr />
 
         <div class="flex flex-col gap-4">
             <div class="flex items-center gap-2">
                 <img :src="fileIcon" alt="fichier" />
-                <span class="text-lg">Fichiers reçus</span>
+                <span class="text-lg text-primary-600 font-bold">Fichiers reçus</span>
             </div>
 
             <Alert v-if="files.length === 0" alert-description="Aucun fichier disponible." />
@@ -23,10 +23,11 @@
                             </div>
                         </div>
 
-                        <button class="flex items-center gap-2 text-[14px] text-[#5F5F5F] bg-[#f4f4f4] border border-neutral-200 rounded-[8px] px-2.5 py-1 cursor-pointer">
-                            <img :src="eyeIcon" alt="voir"/>
+                        <a :href="file.url" target="_blank" rel="noopener noreferrer"
+                            class="flex items-center gap-2 text-[14px] text-[#5F5F5F] bg-[#f4f4f4] border border-neutral-200 rounded-[8px] px-2.5 py-1 cursor-pointer">
+                            <img :src="eyeIcon" alt="voir" />
                             <span>Voir le document</span>
-                        </button>
+                        </a>
                     </li>
                     <div v-if="index !== files.length - 1">
                         <hr />
@@ -34,7 +35,7 @@
                 </template>
             </ul>
         </div>
-      </section>
+    </section>
 </template>
 
 
@@ -48,20 +49,19 @@ import Alert from '@/components/common/Alert.vue'
 import TitleDashboard from '@/components/common/TitleDashboard.vue'
 
 const files = [
-  { name: 'draft_01_proposal.pdf', size: '4.2 ko', icon: pdfIcon },
-  { name: 'UX_notes_v2_final.docx', size: '4.2 ko', icon: pdfIcon },
-  { name: 'report_2025_Q1.xlsx', size: '250 Mo', icon: pdfIcon },
-  { name: 'concept_sketch_04.png', size: '4.2 ko', icon: pdfIcon },
-  { name: 'report_2025_Q1.xlsx', size: '250 Mo', icon: pdfIcon }
+    { name: 'draft_01_proposal.pdf', size: '4.2 ko', icon: pdfIcon, url: '/documents/draft_01_proposal.pdf' },
+    { name: 'UX_notes_v2_final.docx', size: '4.2 ko', icon: pdfIcon, url: '/documents/UX_notes_v2_final.docx' },
+    { name: 'report_2025_Q1.xlsx', size: '250 Mo', icon: pdfIcon, url: '/documents/report_2025_Q1.xlsx' },
+    { name: 'concept_sketch_04.png', size: '4.2 ko', icon: pdfIcon, url: '/documents/concept_sketch_04.png' },
+    { name: 'report_2025_Q1.xlsx', size: '250 Mo', icon: pdfIcon, url: '/documents/report_2025_Q1.xlsx' }
 ]
 </script>
 
 
 <style scoped>
 .file-size {
-  font-size: 12px;
-  color: gray;
-  font-family: "League Spartan";
+    font-size: 12px;
+    color: gray;
+    font-family: "League Spartan";
 }
 </style>
-

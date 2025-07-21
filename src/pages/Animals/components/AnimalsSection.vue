@@ -61,7 +61,7 @@ import petIcon from '@/assets/icons/animalGreen.svg'
 import bigPaw from '@/assets/icons/big-paw.svg'
 
 // Import du composant modale
-import AddAnimal from '@/pages/MyAnimals/components/AddAnimal.vue'
+import AddAnimal from '@/pages/Animals/components/AddAnimal.vue'
 
 // État local pour afficher ou cacher la modale
 const showModal = ref(false)

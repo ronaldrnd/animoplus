@@ -12,171 +12,173 @@
 
     <hr />
 
-    <div class="flex gap-10 w-full bg-white">
-      <!-- Partie gauche : Calendrier -->
-      <div class="">
-        <EventCalendar
-          ref="eventCalendar"
-          :events="calendarEvents"
-          :initial-date="selectedDate"
-          :max-events-per-day="3"
-          footer-text="Liste des rendez-vous"
-          :arrow-down="arrowDown"
-          @day-click="onDayClick"
-          @event-click="onEventClick"
-          @more-events-click="onMoreEventsClick"
-          @month-change="onMonthChange"
-        />
-      </div>
-
-      <!-- Partie droite : formulaire -->
-      <div class="min-w-[40%] flex flex-col gap-4" v-if="showAddEventSection">
-        <h3 class="form-title">Ajouter un rendez-vous</h3>
-        
-        <div class="form-group">
-          <label>Date sélectionnée</label>
-          <input 
-            type="date" 
-            class="input" 
-            v-model="formData.date"
-            @change="onDateChange"
+    <div class="flex flex-col gap-6" :class="auth.role === 'pro' ? 'flex-col-reverse' : ''">
+      <div class="flex gap-10 w-full bg-white">
+        <!-- Partie gauche : Calendrier -->
+        <div class="">
+          <EventCalendar
+            ref="eventCalendar"
+            :events="calendarEvents"
+            :initial-date="selectedDate"
+            :max-events-per-day="3"
+            footer-text="Liste des rendez-vous"
+            :arrow-down="arrowDown"
+            @day-click="onDayClick"
+            @event-click="onEventClick"
+            @more-events-click="onMoreEventsClick"
+            @month-change="onMonthChange"
           />
         </div>
 
-        <div class="form-group">
-          <label>Titre</label>
-          <input 
-            type="text" 
-            class="input" 
-            v-model="formData.title"
-            placeholder="Rendez-vous avec Mr. joe" 
-          />
-        </div>
-
-        <div class="form-group">
-          <label>Type d'événement</label>
-          <div class="select" @click="toggleEventTypeDropdown">
-            <span>{{ selectedEventType.label }}</span>
-            <img :src="arrowDown" class="select-arrow" alt="flèche" />
+        <!-- Partie droite : formulaire -->
+        <div class="min-w-[40%] flex flex-col gap-4" v-if="showAddEventSection">
+          <h3 class="form-title">Ajouter un rendez-vous</h3>
+          
+          <div class="form-group">
+            <label>Date sélectionnée</label>
+            <input 
+              type="date" 
+              class="input" 
+              v-model="formData.date"
+              @change="onDateChange"
+            />
           </div>
-          <div v-if="showEventTypeDropdown" class="dropdown">
-            <div 
-              v-for="type in eventTypes" 
-              :key="type.value"
-              class="dropdown-item"
-              @click="selectEventType(type)"
-            >
-              <span :class="['event-preview', type.value]">●</span>
-              {{ type.label }}
-            </div>
-          </div>
-        </div>
 
-        <div class="form-group">
-          <label>Sélection de l'animal</label>
-          <div class="select" @click="toggleAnimalDropdown">
-            <span>{{ selectedAnimal.label }}</span>
-            <img :src="arrowDown" class="select-arrow" alt="flèche" />
-          </div>
-          <div v-if="showAnimalDropdown" class="dropdown">
-            <div 
-              v-for="animal in animalTypes" 
-              :key="animal.value"
-              class="dropdown-item"
-              @click="selectAnimal(animal)"
-            >
-              {{ animal.label }}
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Heure de début</label>
-          <input 
-            type="time" 
-            class="input" 
-            v-model="formData.startTime"
-          />
-        </div>
-
-        <div class="form-group">
-          <label>Heure de fin</label>
-          <input 
-            type="time" 
-            class="input" 
-            v-model="formData.endTime"
-          />
-        </div>
-
-        <div class="form-group">
-          <label>Adresse de recherche</label>
-          <div class="input-with-btn">
+          <div class="form-group">
+            <label>Titre</label>
             <input 
               type="text" 
               class="input" 
-              v-model="formData.address"
-              placeholder="Antananarivo, 101" 
+              v-model="formData.title"
+              placeholder="Rendez-vous avec Mr. joe" 
             />
-            <button class="btn-location-in">
-              <img :src="locationIcon" alt="Localiser" />
-              Localiser
-            </button>
           </div>
-        </div>
 
-        <div class="form-group">
-          <label>Recherche de service</label>
-          <div class="input-icon-row">
-            <input 
-              type="text" 
-              class="input" 
-              v-model="formData.service"
-              placeholder="Nom, Profession ou Prestation" 
-            />
-            <button class="btn-search" @click="findServiceModal = true">
-              <img :src="searchIcon" alt="Recherche" />
-            </button>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="">Lien vers le rendez-vous en ligne</label>
-          <div class="inline-online-row">
-            <div class="switch-row">
-              <label class="switch">
-                <input 
-                  type="checkbox" 
-                  v-model="formData.isOnline"
-                  @change="onOnlineToggle"
-                />
-                <span class="slider"></span>
-              </label>
-              <span class="switch-label">En ligne</span>
+          <div class="form-group">
+            <label>Type d'événement</label>
+            <div class="select" @click="toggleEventTypeDropdown">
+              <span>{{ selectedEventType.label }}</span>
+              <img :src="arrowDown" class="select-arrow" alt="flèche" />
+            </div>
+            <div v-if="showEventTypeDropdown" class="dropdown">
+              <div 
+                v-for="type in eventTypes" 
+                :key="type.value"
+                class="dropdown-item"
+                @click="selectEventType(type)"
+              >
+                <span :class="['event-preview', type.value]">●</span>
+                {{ type.label }}
+              </div>
             </div>
           </div>
 
-          <template v-if="formData.isOnline && formData.meetLink">
-            <a 
-              :href="formData.meetLink" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              class="flex items-center justify-center bg-[#FFF] border border-[#ededed] rounded-[9px] px-[11px] h-10 text-[13px] font-medium text-[#965C2A] gap-2 cursor-pointer min-w-[250px] hover:bg-gray-50 mt-2"
-            >
-              <img :src="googleMeetIcon" alt="meet" class="w-[30px] h-[30px]" />
-              Go to Meet link
-            </a>
-          </template>
-        </div>
+          <div class="form-group">
+            <label>Sélection de l'animal</label>
+            <div class="select" @click="toggleAnimalDropdown">
+              <span>{{ selectedAnimal.label }}</span>
+              <img :src="arrowDown" class="select-arrow" alt="flèche" />
+            </div>
+            <div v-if="showAnimalDropdown" class="dropdown">
+              <div 
+                v-for="animal in animalTypes" 
+                :key="animal.value"
+                class="dropdown-item"
+                @click="selectAnimal(animal)"
+              >
+                {{ animal.label }}
+              </div>
+            </div>
+          </div>
 
-        <div class="form-actions">
-          <button class="btn-cancel" @click="resetForm">Annuler</button>
-          <button class="btn-add" @click="addAppointment">Ajouter</button>
+          <div class="form-group">
+            <label>Heure de début</label>
+            <input 
+              type="time" 
+              class="input" 
+              v-model="formData.startTime"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Heure de fin</label>
+            <input 
+              type="time" 
+              class="input" 
+              v-model="formData.endTime"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Adresse de recherche</label>
+            <div class="input-with-btn">
+              <input 
+                type="text" 
+                class="input" 
+                v-model="formData.address"
+                placeholder="Antananarivo, 101" 
+              />
+              <button class="btn-location-in">
+                <img :src="locationIcon" alt="Localiser" />
+                Localiser
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Recherche de service</label>
+            <div class="input-icon-row">
+              <input 
+                type="text" 
+                class="input" 
+                v-model="formData.service"
+                placeholder="Nom, Profession ou Prestation" 
+              />
+              <button class="btn-search" @click="findServiceModal = true">
+                <img :src="searchIcon" alt="Recherche" />
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="">Lien vers le rendez-vous en ligne</label>
+            <div class="inline-online-row">
+              <div class="switch-row">
+                <label class="switch">
+                  <input 
+                    type="checkbox" 
+                    v-model="formData.isOnline"
+                    @change="onOnlineToggle"
+                  />
+                  <span class="slider"></span>
+                </label>
+                <span class="switch-label">En ligne</span>
+              </div>
+            </div>
+
+            <template v-if="formData.isOnline && formData.meetLink">
+              <a 
+                :href="formData.meetLink" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="flex items-center justify-center bg-[#FFF] border border-[#ededed] rounded-[9px] px-[11px] h-10 text-[13px] font-medium text-[#965C2A] gap-2 cursor-pointer min-w-[250px] hover:bg-gray-50 mt-2"
+              >
+                <img :src="googleMeetIcon" alt="meet" class="w-[30px] h-[30px]" />
+                Go to Meet link
+              </a>
+            </template>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn-cancel" @click="resetForm">Annuler</button>
+            <button class="btn-add" @click="addAppointment">Ajouter</button>
+          </div>
         </div>
       </div>
+
+      <!-- Liste des rendez-vous -->
+      <ListAppointment :appointment="rendezVousList" @show-appointment-detail="showAppointmentDetail" />
     </div>
-
-    <!-- Liste des rendez-vous -->
-     <ListAppointment :appointment="rendezVousList" @show-appointment-detail="showAppointmentDetail" />
 
     <!-- Modals -->
     <ShowAppointment 
@@ -190,6 +192,8 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import { auth } from '@/stores/auth'
+
 import TitleDashboard from '@/components/common/TitleDashboard.vue'
 import EventCalendar from '@/components/EventCalendar.vue'
 import ShowAppointment from './ShowAppointment.vue'
