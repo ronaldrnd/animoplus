@@ -18,8 +18,10 @@
 <script setup>
 import UserProfile from './components/UserProfile.vue'
 import EditProfile from './components/EditProfile.vue'
+
 // import UserProfilePro from './components/UserProfilePro.vue'
 // import EditProfilePro from './components/EditProfilePro.vue'
+
 import { auth } from '@/stores/auth.js'
 import {  ref } from 'vue';
 
