@@ -14,7 +14,8 @@ const loadAuthState = () => {
   // Valeurs par défaut si rien n'est sauvegardé
   return {
     isAuthenticated: false,
-    role: null
+    role: null,
+    user: null
   }
 }
 
@@ -23,7 +24,8 @@ const saveAuthState = (state) => {
   try {
     localStorage.setItem('auth', JSON.stringify({
       isAuthenticated: state.isAuthenticated,
-      role: state.role
+      role: state.role,
+      user: state.user
     }))
   } catch (error) {
     console.error('Erreur lors de la sauvegarde de l\'état d\'authentification:', error)
@@ -35,6 +37,75 @@ export const auth = reactive(loadAuthState())
 
 // Méthodes pour gérer l'authentification
 export const authMethods = {
+  async register(userData) {
+    try {
+      const response = await fetch('http://localhost:8000/api/v1/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(userData)
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        // Stocker le token (access_token dans la nouvelle réponse)
+        if (data.access_token) {
+          localStorage.setItem('token', data.access_token)
+        }
+        
+        // Connecter automatiquement l'utilisateur après inscription
+        auth.isAuthenticated = true
+        auth.role = data.user?.role || 'client'
+        auth.user = data.user || { name: userData.name, email: userData.email }
+        saveAuthState(auth)
+        
+        return { success: true, data }
+      } else {
+        return { success: false, error: data }
+      }
+    } catch (error) {
+      console.error('Erreur lors de l\'inscription:', error)
+      return { success: false, error: { message: 'Erreur de connexion au serveur' } }
+    }
+  },
+
+  async loginWithCredentials(email, password) {
+    try {
+      const response = await fetch('http://localhost:8000/api/v1/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        // Stocker le token (access_token dans la nouvelle réponse)
+        if (data.access_token) {
+          localStorage.setItem('token', data.access_token)
+        }
+        
+        auth.isAuthenticated = true
+        auth.role = data.user?.role || 'client'
+        auth.user = data.user
+        saveAuthState(auth)
+        
+        return { success: true, data }
+      } else {
+        return { success: false, error: data }
+      }
+    } catch (error) {
+      console.error('Erreur lors de la connexion:', error)
+      return { success: false, error: { message: 'Erreur de connexion au serveur' } }
+    }
+  },
+
   login(role) {
     auth.isAuthenticated = true
     auth.role = role
@@ -44,6 +115,8 @@ export const authMethods = {
   logout() {
     auth.isAuthenticated = false
     auth.role = null
+    auth.user = null
+    localStorage.removeItem('token')
     saveAuthState(auth)
   },
   
@@ -55,8 +128,10 @@ export const authMethods = {
   // Méthode pour nettoyer complètement (équivalent à vider cache/cookies)
   clearAuth() {
     localStorage.removeItem('auth')
+    localStorage.removeItem('token')
     auth.isAuthenticated = false
     auth.role = null
+    auth.user = null
   }
 }
 
@@ -64,7 +139,7 @@ export const authMethods = {
 import { watch } from 'vue'
 
 watch(
-  () => ({ isAuthenticated: auth.isAuthenticated, role: auth.role }),
+  () => ({ isAuthenticated: auth.isAuthenticated, role: auth.role, user: auth.user }),
   (newState) => {
     saveAuthState(newState)
   },

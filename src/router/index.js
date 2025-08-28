@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Homepage from '../pages/Homepage/Homepage.vue'
 import AskAppointment from '@/pages/Homepage/AskAppointment.vue'
 import Login from '@/pages/Authentication/Login.vue'
+import Register from '@/pages/Authentication/Register.vue'
 import Dashboard from '@/pages/Dashboard/Dashboard.vue'
 import Animals from '@/pages/Animals/Animals.vue'
 import Documents from '@/pages/Documents/Documents.vue'
@@ -29,6 +30,12 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: Login,
+      meta: { requiresGuest: true }
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register,
       meta: { requiresGuest: true }
     },
     {

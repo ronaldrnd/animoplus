@@ -1,11 +1,29 @@
 <template>
-  <BaseModal title="Recherche de service" @close="showModal = false" :footer="true">
+  <BaseModal title="Recherche de service" @close="$emit('close')" :footer="true">
     <div class="popup-subtitle">Service</div>
-    <div class="service-list">
+    
+    <!-- Loading state -->
+    <div v-if="isLoading" class="loading-state">
+      Chargement des services...
+    </div>
+    
+    <!-- Error state -->
+    <div v-else-if="error" class="error-state">
+      {{ error }}
+    </div>
+    
+    <!-- Empty state -->
+    <div v-else-if="professionals.length === 0" class="empty-state">
+      Aucun service trouvé
+    </div>
+    
+    <!-- Results -->
+    <div v-else class="service-list">
       <div
         v-for="(pro, index) in professionals"
-        :key="index"
-        class="service-card"
+        :key="pro.id || index"
+        class="service-card clickable"
+        @click="selectService(pro)"
       >
         <div class="service-title">{{ pro.name }}</div>
         <div class="service-row">
@@ -32,45 +50,83 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import BaseModal from '@/components/common/BaseModal.vue';
 
 import phoneIcon from '@/assets/icons/phone.svg'
 import locationsIcon from '@/assets/icons/location.svg'
 import clockIcon from '@/assets/icons/clock.svg'
 
-
 const props = defineProps({
     close: {
         type: Boolean,
         default: false
+    },
+    searchQuery: {
+        type: String,
+        default: ''
     }
 });
 
-// RECHERCHE DE SERVICE
-const professionals = [
-  {
-    name: 'Dr. Martin Vétérinaire',
-    address: '345 Faulconer Drive, Suite 4 • Charlottesville, CA, 12345',
-    phone: '(123) 456-7890',
-    hours: 'Ouvert 24h/24',
-    open: true,
-  },
-  {
-    name: 'Clinique vétérinaire Centrale',
-    address: '345 Faulconer Drive, Suite 4 • Charlottesville, CA, 12345',
-    phone: '(123) 456-7890',
-    hours: 'Ouvert 24h/24',
-    open: true,
-  },
-  {
-    name: 'Urgence Vétérinaire de Nuit',
-    address: '345 Faulconer Drive, Suite 4 • Charlottesville, CA, 12345',
-    phone: '(123) 456-7890',
-    hours: '20h - 8h',
-    open: false,
+// Reactive data for professionals
+const professionals = ref([])
+const isLoading = ref(false)
+const error = ref('')
+
+// Fetch services from API
+async function fetchServices() {
+  isLoading.value = true
+  error.value = ''
+  
+  try {
+    const token = localStorage.getItem('token')
+    const searchParam = props.searchQuery ? `?search=${encodeURIComponent(props.searchQuery)}` : ''
+    
+    const response = await fetch(`http://localhost:8000/api/v1/services${searchParam}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/json'
+      }
+    })
+    
+    if (response.ok) {
+      const data = await response.json()
+      const services = data.data || data
+      
+      // Transform services to professionals format for display
+      professionals.value = services.map(service => ({
+        id: service.id,
+        name: service.name,
+        address: `Prix: ${service.price}€ - Durée: ${service.duration} min`,
+        phone: service.description || 'Pas de description',
+        hours: service.is_active ? 'Service disponible' : 'Service indisponible',
+        open: service.is_active,
+        service: service
+      }))
+    } else {
+      error.value = 'Erreur lors de la récupération des services'
+      console.error('Erreur API:', response.statusText)
+    }
+  } catch (err) {
+    error.value = 'Erreur de connexion'
+    console.error('Erreur:', err)
+  } finally {
+    isLoading.value = false
   }
-]
+}
+
+// Define emits
+const emit = defineEmits(['close', 'select-service'])
+
+// Function to select a service
+const selectService = (service) => {
+  emit('select-service', service.service)
+  emit('close')
+}
+
+onMounted(() => {
+  fetchServices()
+})
 </script>
 
 <style scoped>
@@ -85,6 +141,9 @@ const professionals = [
   display: flex;
   flex-direction: column;
   gap: 13px;
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 5px;
 }
 .service-card {
   background: #fff;
@@ -95,6 +154,18 @@ const professionals = [
   display: flex;
   flex-direction: column;
   gap: 3px;
+}
+
+.service-card.clickable {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.service-card.clickable:hover {
+  background: #f8f9fa;
+  border-color: #43A047;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 .service-title {
   font-family: "League Spartan", Arial, sans-serif;
@@ -136,6 +207,17 @@ const professionals = [
   background: #FFDBDB;
   color: #EF5350;
   border: 1px solid #EF535022;
+}
+
+.loading-state, .error-state, .empty-state {
+  padding: 20px;
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+}
+
+.error-state {
+  color: #EF5350;
 }
 .popup-actions {
   margin-top: 22px;

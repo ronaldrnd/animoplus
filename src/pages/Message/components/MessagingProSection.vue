@@ -12,7 +12,67 @@
         <!-- Barre de recherche -->
         <div class="search-bar">
             <img :src="searchIcon" alt="Search" class="icon" />
-            <input type="text" placeholder="Rechercher" />
+            <input 
+                type="text" 
+                placeholder="Rechercher un utilisateur..." 
+                v-model="searchQuery"
+                @input="searchUsers"
+                @focus="showSearchResults = true"
+                @keyup.enter="validateSearch"
+            />
+            <button 
+                @click="validateSearch"
+                :disabled="!searchQuery.trim() || isSearching"
+                class="search-validate-btn"
+                title="Valider la recherche"
+            >
+                Valider
+            </button>
+        </div>
+
+        <!-- Modal des résultats de recherche -->
+        <div v-if="showSearchResults && searchQuery" class="search-modal-overlay" @click="closeSearchModal">
+            <div class="search-modal" @click.stop>
+                <div class="search-modal-header">
+                    <h3 class="search-modal-title">Résultats de recherche</h3>
+                    <button @click="closeSearchModal" class="search-modal-close">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="search-modal-content">
+                    <div v-if="isSearching" class="search-loading">
+                        <div class="loading-spinner"></div>
+                        Recherche en cours...
+                    </div>
+                    <div v-else-if="searchResults.length === 0" class="no-results">
+                        <div class="no-results-icon">🔍</div>
+                        <p>Aucun utilisateur trouvé</p>
+                        <p class="no-results-subtitle">Essayez avec un autre terme de recherche</p>
+                    </div>
+                    <div v-else class="search-results-list">
+                        <div 
+                            v-for="user in searchResults" 
+                            :key="user.id"
+                            @click="selectUser(user)"
+                            class="search-result-item"
+                        >
+                            <img :src="user.avatar || avatar1" :alt="user.name" class="result-avatar" />
+                            <div class="result-info">
+                                <div class="result-name">{{ user.name }}</div>
+                                <div class="result-email">{{ user.email }}</div>
+                                <div v-if="user.specialite" class="result-specialty">{{ user.specialite }}</div>
+                            </div>
+                            <div class="result-badge" :class="user.role === 'veterinaire' ? 'badge2' : 'badge'">
+                                {{ user.role === 'veterinaire' ? 'PRO' : 'PATIENT' }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Contenu principal -->
@@ -150,6 +210,8 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue'
+import { auth } from '@/stores/auth.js'
 import searchIcon from '@/assets/icons/breeder-search-black.svg'
 import refreshIcon from '@/assets/icons/refresh.svg'
 import avatar1 from '@/assets/images/image1.svg'
@@ -160,8 +222,17 @@ import ellipse from '@/assets/layers/Ellipse.svg'
 import calendar from '@/assets/icons/calendar.svg'
 import sendIcon from '@/assets/icons/send-icon.svg'
 
+const API_BASE_URL = 'http://localhost:8000/api/v1'
 
-const conversations = [
+// Search functionality
+const searchQuery = ref('')
+const searchResults = ref([])
+const showSearchResults = ref(false)
+const isSearching = ref(false)
+let searchTimeout = null
+
+// Conversations
+const conversations = ref([
   { 
     name: 'Jane Doe',
     message: 'Hi, I want make enquiries about your...',
@@ -211,7 +282,214 @@ const conversations = [
     unread: true,
     image: avatar1
   }
-]
+])
+
+// Search users with debounce
+async function searchUsers() {
+  if (searchTimeout) {
+    clearTimeout(searchTimeout)
+  }
+  
+  searchTimeout = setTimeout(async () => {
+    if (!searchQuery.value.trim()) {
+      searchResults.value = []
+      return
+    }
+    
+    isSearching.value = true
+    
+    try {
+      const token = localStorage.getItem('token')
+      if (!token) {
+        console.error('No authentication token found')
+        return
+      }
+      
+      const response = await fetch(`${API_BASE_URL}/users`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'application/json'
+        }
+      })
+      
+      if (response.ok) {
+        const data = await response.json()
+        const users = data.data || data.users || data
+        
+        // Filter users based on search query and exclude current user
+        const filteredUsers = users.filter(user => 
+          user.id !== auth.user?.id &&
+          (user.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+           user.email.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+           (user.specialite && user.specialite.toLowerCase().includes(searchQuery.value.toLowerCase())))
+        )
+        
+        searchResults.value = filteredUsers.slice(0, 10) // Limit to 10 results
+      } else {
+        console.error('Failed to fetch users')
+        searchResults.value = []
+      }
+    } catch (error) {
+      console.error('Error searching users:', error)
+      searchResults.value = []
+    } finally {
+      isSearching.value = false
+    }
+  }, 300) // 300ms debounce
+}
+
+// Validate search - trigger immediate search
+async function validateSearch() {
+  if (!searchQuery.value.trim()) {
+    return
+  }
+  
+  // Clear any pending debounced search
+  if (searchTimeout) {
+    clearTimeout(searchTimeout)
+  }
+  
+  // Show search results immediately
+  showSearchResults.value = true
+  
+  // Perform immediate search
+  isSearching.value = true
+  
+  try {
+    const token = localStorage.getItem('token')
+    if (!token) {
+      console.error('No authentication token found')
+      return
+    }
+    
+    const response = await fetch(`${API_BASE_URL}/users`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/json'
+      }
+    })
+    
+    if (response.ok) {
+      const data = await response.json()
+      const users = data.data || data.users || data
+      
+      // Filter users based on search query and exclude current user
+      const filteredUsers = users.filter(user => 
+        user.id !== auth.user?.id &&
+        (user.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+         user.email.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+         (user.specialite && user.specialite.toLowerCase().includes(searchQuery.value.toLowerCase())))
+      )
+      
+      searchResults.value = filteredUsers.slice(0, 10) // Limit to 10 results
+    } else {
+      console.error('Failed to fetch users')
+      searchResults.value = []
+    }
+  } catch (error) {
+    console.error('Error searching users:', error)
+    searchResults.value = []
+  } finally {
+    isSearching.value = false
+  }
+}
+
+// Select user to start conversation
+async function selectUser(user) {
+  try {
+    // Hide search results
+    showSearchResults.value = false
+    searchQuery.value = ''
+    searchResults.value = []
+    
+    // Check if conversation already exists or create new one
+    await startConversationWithUser(user)
+    
+  } catch (error) {
+    console.error('Error selecting user:', error)
+  }
+}
+
+// Start conversation with selected user
+async function startConversationWithUser(user) {
+  try {
+    const token = localStorage.getItem('token')
+    if (!token) {
+      alert('Vous devez être connecté pour envoyer des messages')
+      return
+    }
+    
+    // Check if conversation already exists
+    const response = await fetch(`${API_BASE_URL}/messages/conversation/${user.id}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/json'
+      }
+    })
+    
+    if (response.ok) {
+      const data = await response.json()
+      console.log('Conversation found:', data)
+      
+      // Add or update conversation in the list
+      const existingConvIndex = conversations.value.findIndex(conv => conv.userId === user.id)
+      const newConv = {
+        userId: user.id,
+        name: user.name,
+        message: 'Nouvelle conversation',
+        time: 'maintenant',
+        unread: false,
+        image: user.avatar || avatar1,
+        role: user.role
+      }
+      
+      if (existingConvIndex >= 0) {
+        conversations.value[existingConvIndex] = newConv
+      } else {
+        conversations.value.unshift(newConv)
+      }
+      
+      // TODO: Switch to this conversation in the UI
+      console.log(`Conversation started with ${user.name}`)
+      
+    } else {
+      console.log('No existing conversation, ready to send first message')
+      
+      // Add new conversation to the list
+      const newConv = {
+        userId: user.id,
+        name: user.name,
+        message: 'Nouvelle conversation',
+        time: 'maintenant',
+        unread: false,
+        image: user.avatar || avatar1,
+        role: user.role
+      }
+      
+      conversations.value.unshift(newConv)
+    }
+    
+  } catch (error) {
+    console.error('Error starting conversation:', error)
+  }
+}
+
+// Close search modal
+function closeSearchModal() {
+  showSearchResults.value = false
+  searchQuery.value = ''
+  searchResults.value = []
+}
+
+// Close search results when clicking outside (no longer needed for modal)
+function handleClickOutside(event) {
+  // Modal handles its own closing, so this is no longer needed
+}
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside)
+})
+
 </script>
 
 <style scoped>
@@ -248,6 +526,7 @@ const conversations = [
 }
 /* barre de recherche */
 .search-bar {
+  position: relative;
   display: flex;
   align-items: center;
   border: 1px solid #E5E7EB;
@@ -271,6 +550,211 @@ const conversations = [
   color: #2E2E30;
   background: transparent;
 }
+
+.search-validate-btn {
+  background-color: #A0522D;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-left: 8px;
+  transition: background-color 0.2s, opacity 0.2s;
+}
+
+.search-validate-btn:hover:not(:disabled) {
+  background-color: #8B4513;
+}
+
+.search-validate-btn:disabled {
+  background-color: #D1D5DB;
+  color: #9CA3AF;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Search Modal */
+.search-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.search-modal {
+  background: white;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+.search-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid #E5E7EB;
+  background-color: #F9FAFB;
+}
+
+.search-modal-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #374151;
+  margin: 0;
+}
+
+.search-modal-close {
+  background: none;
+  border: none;
+  color: #6B7280;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.search-modal-close:hover {
+  background-color: #E5E7EB;
+  color: #374151;
+}
+
+.search-modal-content {
+  padding: 24px;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.search-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 40px 20px;
+  text-align: center;
+  color: #6B7280;
+  font-size: 14px;
+}
+
+.loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #E5E7EB;
+  border-top: 3px solid #A0522D;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.no-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 40px 20px;
+  text-align: center;
+  color: #6B7280;
+}
+
+.no-results-icon {
+  font-size: 48px;
+  margin-bottom: 8px;
+}
+
+.no-results p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.no-results-subtitle {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  color: #9CA3AF !important;
+}
+
+.search-results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.search-result-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #F3F4F6;
+  transition: background-color 0.2s;
+  position: relative;
+}
+
+.search-result-item:hover {
+  background-color: #F9FAFB;
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+.result-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.result-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.result-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: #374151;
+  margin-bottom: 2px;
+}
+
+.result-email {
+  font-size: 12px;
+  color: #6B7280;
+  margin-bottom: 2px;
+}
+
+.result-specialty {
+  font-size: 11px;
+  color: #9CA3AF;
+  font-style: italic;
+}
+
+.result-badge {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
 /* Conteneur principal */
 .messaging-container {
   display: flex;

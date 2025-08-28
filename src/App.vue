@@ -13,11 +13,7 @@ import botIcon from '@/assets/icons/bot.svg';
 
 const isOpenBot = ref(false)
 
-onMounted(() => {
-  setTimeout(() => {
-    isOpenBot.value = true
-  }, 5000)
-})
+// Chat popup will only open when user clicks the chat button
 
 </script>
 

@@ -1,14 +1,26 @@
 <template>
   <div class="flex flex-col gap-4 mt-4">
     <div class="flex items-center font-bold gap-4">
-          <h3>Liste des rendez-vous</h3>
+          <h3>Liste des rendez-vous </h3>
         </div>
 
         <hr />
 
+      <!-- Loading state -->
+      <div v-if="isLoading" class="flex items-center justify-center py-8">
+        <div class="text-gray-500">Chargement des rendez-vous...</div>
+      </div>
+
+      <!-- Empty state -->
+      <div v-else-if="appointment.length === 0" class="flex items-center justify-center py-8">
+        <div class="text-gray-500">Aucun rendez-vous trouvé</div>
+      </div>
+
+      <!-- Appointments list -->
       <div
+        v-else
         v-for="(rdv, idx) in appointment"
-        :key="idx"
+        :key="rdv.id || idx"
         class="flex items-center bg-white border border-[#ededed] rounded-[14px] px-4 py-2 min-h-[56px] w-full cursor-pointer hover:shadow-md transition-shadow"
         @click="$emit('showAppointmentDetail', rdv)"
       >
@@ -69,7 +81,14 @@ import googleMeetIcon from '@/assets/icons/google-meet.svg'
 import { computed } from 'vue';
 
 const props = defineProps({
-  appointment: Object,
+  appointment: {
+    type: Array,
+    default: () => []
+  },
+  isLoading: {
+    type: Boolean,
+    default: false
+  }
 });
 
 const emit = defineEmits(['showAppointmentDetail']);

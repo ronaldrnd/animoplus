@@ -11,9 +11,9 @@
                 <a href="#" class="text-white text-lg font-medium">Vous êtes un pro</a>
             </div>
             <div class="flex justify-start items-center gap-6">
-                <router-link to="/login"
+                <router-link to="/register"
                     class="px-6 py-3 rounded-xl shadow-[0px_1px_3px_0px_rgba(0,0,0,0.05)] outline outline-1 outline-offset-[-1px] outline-gray-200 flex justify-center items-center gap-2.5">
-                    <span class="text-white text-lg">S’inscrire</span>
+                    <span class="text-white text-lg">S'inscrire</span>
                 </router-link>
 
                 <router-link to="/login"
@@ -34,7 +34,7 @@
 
         <router-link v-else-if="isResgisterPage" to="/login"
             class="px-6 py-3 bg-white rounded-xl shadow-[0px_1px_3px_0px_rgba(0,0,0,0.05)] outline outline-1 outline-offset-[-1px] outline-gray-200 flex justify-center items-center gap-2.5">
-            <span class="text-primary-600 text-lg">S'inscrire</span>
+            <span class="text-primary-600 text-lg">Se connecter</span>
 
             <div class="w-4 h-4 relative overflow-hidden">
                 <div
@@ -46,7 +46,7 @@
             </div>
         </router-link>
 
-        <router-link v-else to="/login"
+        <router-link v-else to="/register"
             class="px-6 py-3 bg-white rounded-xl shadow-[0px_1px_3px_0px_rgba(0,0,0,0.05)] outline outline-1 outline-offset-[-1px] outline-gray-200 flex justify-center items-center gap-2.5">
             <span class="text-primary-600 text-lg">S'inscrire</span>
 

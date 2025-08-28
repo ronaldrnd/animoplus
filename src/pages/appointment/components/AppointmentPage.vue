@@ -80,13 +80,38 @@
               <img :src="arrowDown" class="select-arrow" alt="flèche" />
             </div>
             <div v-if="showAnimalDropdown" class="dropdown">
-              <div 
-                v-for="animal in animalTypes" 
-                :key="animal.value"
-                class="dropdown-item"
-                @click="selectAnimal(animal)"
-              >
-                {{ animal.label }}
+              <div v-if="isLoadingAnimals || isLoadingSpecies" class="dropdown-item">
+                Chargement...
+              </div>
+              <div v-else-if="animalTypes.length === 0 && speciesTypes.length === 0" class="dropdown-item">
+                Aucun animal ou espèce trouvé
+              </div>
+              <div v-else>
+                <!-- User's Animals Section -->
+                <div v-if="animalTypes.length > 0">
+                  <div class="dropdown-section-header">Mes animaux</div>
+                  <div
+                    v-for="animal in animalTypes" 
+                    :key="animal.value"
+                    class="dropdown-item"
+                    @click="selectAnimal(animal)"
+                  >
+                    {{ animal.label }}
+                  </div>
+                </div>
+                
+                <!-- Species Section -->
+                <div v-if="speciesTypes.length > 0">
+                  <div class="dropdown-section-header" :class="{ 'with-separator': animalTypes.length > 0 }">Espèces disponibles</div>
+                  <div
+                    v-for="species in speciesTypes" 
+                    :key="species.value"
+                    class="dropdown-item species-item"
+                    @click="selectAnimal(species)"
+                  >
+                    {{ species.label }}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -170,14 +195,20 @@
           </div>
 
           <div class="form-actions">
-            <button class="btn-cancel" @click="resetForm">Annuler</button>
-            <button class="btn-add" @click="addAppointment">Ajouter</button>
+            <button class="btn-cancel" @click="resetForm" :disabled="isSubmitting">Annuler</button>
+            <button class="btn-add" @click="addAppointment" :disabled="isSubmitting">
+              {{ isSubmitting ? 'Création en cours...' : 'Ajouter' }}
+            </button>
           </div>
         </div>
       </div>
 
       <!-- Liste des rendez-vous -->
-      <ListAppointment :appointment="rendezVousList" @show-appointment-detail="showAppointmentDetail" />
+      <ListAppointment 
+        :appointment="rendezVousList" 
+        :is-loading="isLoadingAppointments"
+        @show-appointment-detail="showAppointmentDetail" 
+      />
     </div>
 
     <!-- Modals -->
@@ -186,7 +217,12 @@
       :appointment="selectedAppointmentData"
       @close="showModal = false" 
     />
-    <FindService v-if="findServiceModal" @close="findServiceModal = false" />
+    <FindService 
+      v-if="findServiceModal" 
+      :searchQuery="formData.service"
+      @close="findServiceModal = false" 
+      @select-service="onServiceSelected"
+    />
   </section>
 </template>
 
@@ -237,62 +273,23 @@ const eventTypes = ref([
   { value: 'orange', label: 'Suivi' }
 ])
 
-// Animal types options
-const animalTypes = ref([
-  { value: 'chien', label: 'Chien' },
-  { value: 'chat', label: 'Chat' },
-  { value: 'oiseau', label: 'Oiseau' },
-  { value: 'lapin', label: 'Lapin' },
-  { value: 'hamster', label: 'Hamster' },
-  { value: 'reptile', label: 'Reptile' },
-  { value: 'poisson', label: 'Poisson' },
-  { value: 'autre', label: 'Autre' }
-])
+// User's animals and species from API
+const animalTypes = ref([])
+const speciesTypes = ref([])
+const isLoadingAnimals = ref(false)
+const isLoadingSpecies = ref(false)
+const isSubmitting = ref(false)
+const isLoadingAppointments = ref(false)
+
+// API Configuration
+const API_BASE_URL = 'http://localhost:8000/api/v1'
 
 const selectedEventType = ref(eventTypes.value[0])
-const selectedAnimal = ref({ value: '', label: 'Sélectionner une espèce' })
+const selectedAnimal = ref({ value: '', label: 'Sélectionner un animal' })
 const showAddEventSection = ref(false)
 
-// Existing appointments data - Mis à jour avec les événements du calendrier
-const rendezVousList = ref([
-  {
-    jour: "Lundi",
-    date: "17 Juin 2025",
-    enLigne: true,
-    titre: "Rendez-vous avec Vétérinaire urgence",
-    heureDebut: "08:45",
-    heureFin: "10:45",
-    meetLink: "https://meet.google.com/abc-defg-hij",
-    animal: "chien",
-    eventType: "red",
-    address: "Antananarivo, 101",
-    service: "Consultation urgence"
-  },
-  {
-    jour: "Mercredi", 
-    date: "12 Juillet 2025",
-    enLigne: false,
-    titre: "Consultation avec Dr. martine Vétérinaire",
-    heureDebut: "08:45",
-    heureFin: "10:45",
-    animal: "chat",
-    eventType: "blue",
-    address: "Antananarivo, 101",
-    service: "Consultation générale"
-  },
-  {
-    jour: "Mercredi",
-    date: "12 Juillet 2025", 
-    enLigne: false,
-    titre: "Suivi avec Dr. martine Vétérinaire",
-    heureDebut: "14:30",
-    heureFin: "16:30",
-    animal: "chien",
-    eventType: "orange", 
-    address: "Antananarivo, 101",
-    service: "Suivi post-opératoire"
-  }
-])
+// Appointments data from API
+const rendezVousList = ref([])
 
 // Calendar events computed property
 const calendarEvents = computed(() => {
@@ -322,6 +319,141 @@ const calendarEvents = computed(() => {
   
   return events
 })
+
+// Fetch user's animals from API
+async function fetchUserAnimals() {
+  if (!auth.user?.id) return
+  
+  isLoadingAnimals.value = true
+  
+  try {
+    const token = localStorage.getItem('token')
+    const response = await fetch(`http://localhost:8000/api/v1/animals/owner/${auth.user.id}?per_page=50`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/json'
+      }
+    })
+    
+    if (response.ok) {
+      const data = await response.json()
+      const animals = data.data || data
+      
+      // Transform animals to dropdown format
+      animalTypes.value = animals.map(animal => ({
+        value: animal.id,
+        label: `${animal.nom} (${animal.espece?.nom || 'Espèce inconnue'})`,
+        type: 'animal'
+      }))
+    } else {
+      console.error('Erreur lors de la récupération des animaux:', response.statusText)
+    }
+  } catch (err) {
+    console.error('Erreur:', err)
+  } finally {
+    isLoadingAnimals.value = false
+  }
+}
+
+// Fetch all species from API
+async function fetchSpecies() {
+  try {
+    isLoadingSpecies.value = true
+    const token = localStorage.getItem('token')
+    
+    if (!token) {
+      console.error('No token found')
+      return
+    }
+
+    const response = await fetch(`${API_BASE_URL}/especes`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch species')
+    }
+
+    const data = await response.json()
+    const species = data.data || []
+    
+    speciesTypes.value = species.map(specie => ({
+      value: specie.id,
+      label: specie.nom,
+      type: 'species'
+    }))
+    
+  } catch (error) {
+    console.error('Error fetching species:', error)
+  } finally {
+    isLoadingSpecies.value = false
+  }
+}
+
+async function fetchAppointments() {
+  try {
+    isLoadingAppointments.value = true
+    const token = localStorage.getItem('token')
+    
+    if (!token) {
+      console.error('No token found')
+      return
+    }
+
+    const response = await fetch(`${API_BASE_URL}/appointments?per_page=50&sort_by=date&sort_order=asc`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch appointments')
+    }
+
+    const data = await response.json()
+    const appointments = data.data || []
+    
+    // Transform API data to match component format
+    rendezVousList.value = appointments.map(appointment => {
+      const appointmentDate = new Date(appointment.date)
+      const dayName = getDayName(appointmentDate)
+      const formattedDate = formatDate(appointmentDate)
+      
+      return {
+        id: appointment.id,
+        jour: dayName,
+        date: formattedDate,
+        enLigne: appointment.is_online || false,
+        titre: appointment.message || 'Rendez-vous',
+        heureDebut: appointment.start_time,
+        heureFin: appointment.end_time,
+        meetLink: appointment.meet_link || '',
+        animal: appointment.animal?.nom || 'Animal non spécifié',
+        eventType: getEventTypeFromStatus(appointment.status),
+        address: appointment.address || 'Adresse non spécifiée',
+        service: appointment.service?.name || 'Service non spécifié',
+        status: appointment.status
+      }
+    })
+    
+  } catch (error) {
+    console.error('Error fetching appointments:', error)
+  } finally {
+    isLoadingAppointments.value = false
+  }
+}
+
+const getEventTypeFromStatus = (status) => {
+  switch (status) {
+    case 'confirmed': return 'green'
+    case 'pending': return 'orange'
+    case 'cancelled': return 'red'
+    case 'completed': return 'blue'
+    default: return 'green'
+  }
+}
 
 // Methods
 const onDayClick = (day) => {
@@ -390,29 +522,91 @@ const onOnlineToggle = () => {
   }
 }
 
-const addAppointment = () => {
-  if (!formData.value.title || !formData.value.date || !formData.value.startTime || !formData.value.endTime) {
-    alert('Veuillez remplir tous les champs obligatoires')
+const addAppointment = async () => {
+  // Comprehensive form validation
+  const missingFields = []
+  
+  if (!formData.value.title) missingFields.push('Titre')
+  if (!formData.value.date) missingFields.push('Date')
+  if (!formData.value.startTime) missingFields.push('Heure de début')
+  if (!formData.value.endTime) missingFields.push('Heure de fin')
+  if (!formData.value.animal) missingFields.push('Animal')
+  if (!formData.value.service) missingFields.push('Service')
+  
+  if (missingFields.length > 0) {
+    alert(`Veuillez remplir les champs suivants: ${missingFields.join(', ')}`)
     return
   }
 
-  const newAppointment = {
-    jour: getDayName(new Date(formData.value.date)),
-    date: formatDate(new Date(formData.value.date)),
-    enLigne: formData.value.isOnline,
-    titre: formData.value.title,
-    heureDebut: formData.value.startTime,
-    heureFin: formData.value.endTime,
-    meetLink: formData.value.meetLink, // Lien Meet généré automatiquement
-    animal: formData.value.animal,
-    eventType: formData.value.eventType,
-    address: formData.value.address,
-    service: formData.value.service
+  // Validate time logic
+  if (formData.value.startTime >= formData.value.endTime) {
+    alert('L\'heure de fin doit être après l\'heure de début')
+    return
   }
 
-  rendezVousList.value.push(newAppointment)
-  resetForm()
-  alert('Rendez-vous ajouté avec succès!')
+  try {
+    isSubmitting.value = true
+    
+    const token = localStorage.getItem('token')
+    if (!token) {
+      alert('Vous devez être connecté pour créer un rendez-vous')
+      return
+    }
+
+    // Prepare appointment data for API
+    const appointmentData = {
+      animal_id: parseInt(formData.value.animal),
+      service_id: parseInt(formData.value.service),
+      date: formData.value.date,
+      start_time: formData.value.startTime,
+      end_time: formData.value.endTime,
+      message: formData.value.title,
+      assign_specialist_id: null
+    }
+
+    const response = await fetch(`${API_BASE_URL}/appointments`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(appointmentData)
+    })
+
+    if (!response.ok) {
+      const errorData = await response.json()
+      throw new Error(errorData.message || 'Erreur lors de la création du rendez-vous')
+    }
+
+    const createdAppointment = await response.json()
+    
+    // Add to local calendar display
+    const newAppointment = {
+      jour: getDayName(new Date(formData.value.date)),
+      date: formatDate(new Date(formData.value.date)),
+      enLigne: formData.value.isOnline,
+      titre: formData.value.title,
+      heureDebut: formData.value.startTime,
+      heureFin: formData.value.endTime,
+      meetLink: formData.value.meetLink,
+      animal: formData.value.animal,
+      eventType: formData.value.eventType,
+      address: formData.value.address,
+      service: formData.value.service,
+      id: createdAppointment.data?.id || Date.now()
+    }
+
+    // Refresh appointments list from API instead of just adding locally
+    await fetchAppointments()
+    resetForm()
+    alert('Rendez-vous créé avec succès!')
+    
+  } catch (error) {
+    console.error('Erreur lors de la création du rendez-vous:', error)
+    alert(`Erreur: ${error.message}`)
+  } finally {
+    isSubmitting.value = false
+  }
 }
 
 const resetForm = () => {
@@ -430,7 +624,7 @@ const resetForm = () => {
     meetLink: ''
   }
   selectedEventType.value = eventTypes.value[0]
-  selectedAnimal.value = { value: '', label: 'Sélectionner une espèce' }
+  selectedAnimal.value = { value: '', label: 'Sélectionner un animal' }
 }
 
 const getDayName = (date) => {
@@ -444,6 +638,13 @@ const formatDate = (date) => {
     'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'
   ]
   return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`
+}
+
+// Handle service selection from FindService modal
+const onServiceSelected = (service) => {
+  formData.value.service = service.name
+  // Store the selected service data for later use
+  formData.value.selectedServiceData = service
 }
 
 // détails d'un rendez-vous
@@ -461,10 +662,16 @@ const closeDropdowns = (event) => {
 }
 
 onMounted(() => {
-  document.addEventListener('click', closeDropdowns)
-  // Set initial form date to today
-  formData.value.date = new Date().toISOString().split('T')[0]
+  // Initialiser la date sélectionnée à aujourd'hui
+  const today = new Date()
+  formData.value.date = today.toISOString().split('T')[0]
+  
+  // Fetch user's animals, species, and appointments
+  fetchUserAnimals()
+  fetchSpecies()
+  fetchAppointments()
 })
+
 </script>
 
 <style scoped>
@@ -555,9 +762,31 @@ onMounted(() => {
 }
 
 .event-preview.green { color: #43A047; }
-.event-preview.red { color: #EF5350; }
+.event-preview.error-state {
+  color: #EF5350;
+}
 .event-preview.blue { color: #2196F3; }
 .event-preview.orange { color: #FF9800; }
+
+.dropdown-section-header {
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  padding: 8px 12px 4px 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.dropdown-section-header.with-separator {
+  border-top: 1px solid #E0E0E0;
+  margin-top: 4px;
+  padding-top: 12px;
+}
+
+.dropdown-item.species-item {
+  color: #43A047;
+  font-style: italic;
+}
 
 .select-row {
   border: 1px solid #E0E0E0;
@@ -741,6 +970,17 @@ onMounted(() => {
 
 .btn-add:hover {
   background: #2E7D31;
+}
+
+.btn-add:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn-cancel:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .btn-location-in:hover {
